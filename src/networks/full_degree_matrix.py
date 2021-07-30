@@ -5,7 +5,7 @@ import networkx as nx
 
 from tqdm import tqdm
 
-from utils import load_networks, get_degree_distribution
+from utils import load_networks
 
 # Get File Names
 data_path = os.path.join(os.path.dirname(__file__), '..', '..', 'Data')
