@@ -1,7 +1,2 @@
-MathWorks General System Identification:
-https://www.mathworks.com/help/ident/gs/about-system-identification.html
-
-SysIdentPy:
-http://sysidentpy.org/introduction_to_narmax.html
-
-
+Dynamics of Complex Systems:
+https://necsi.edu/dynamics-of-complex-systems
