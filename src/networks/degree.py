@@ -6,7 +6,7 @@ from tqdm import tqdm
 from utils import load_networks, get_degree_distribution
 
 # Get File Names
-networks_dir = load_networks('Generated/Barabasi')
+networks_dir = load_networks('Data/Generated/Barabasi')
 # net_dir = np.random.choice(networks_dir)
 net_dir = networks_dir[0] # For debugging purposes
 G = nx.read_gpickle(net_dir)
