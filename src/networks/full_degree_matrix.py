@@ -22,7 +22,6 @@ for net_dir in networks_dir:
         index = range(num+1)
         H = G.subgraph(index)
         degrees_sub = np.fromiter(dict(nx.degree(H)).values(), dtype=int)
-        # degrees_sub = list(dict(nx.degree(H)).values())
         degrees_t[num] = np.pad(degrees_sub, (0, N - num - 1), 'constant', constant_values=0)
 
     with open(net_dir.replace('.gz', '.npy'), 'wb') as f:
