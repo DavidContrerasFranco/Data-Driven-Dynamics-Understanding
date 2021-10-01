@@ -17,7 +17,8 @@ def _random_subset(seq, m, rng):
     """
     targets = set()
     while len(targets) < m:
-        targets.add(rng.choice(seq))
+        x = rng.choice(seq)
+        targets.add(x)
     return list(targets)
 
 
@@ -33,9 +34,9 @@ def _random_subset_weighted(seq, m, fitness_values, rng):
     targets = set()
     weights = np.array([fitness_values[node] for node in seq])
     weights = weights / np.sum(weights)
-    while len(targets)<m:
-        x = npr.choice(list(seq), 1, p=weights.tolist())
-        targets.add(x[0])
+    while len(targets) < m:
+        x = npr.choice(list(seq), 1, p=weights.tolist())[0]
+        targets.add(x)
     return list(targets)
 
 
@@ -59,22 +60,27 @@ def ba_graph_degree(n, m, seed=None):
     degree_hist : ndarray = Degree history of the graph
     colors : color labels for plotting
     """
-    # M initial nodes not connected to avoid skewing preferential attachment
+    # M +1 initial nodes fully connected to avoid skewing preferential attachment
     # Only the initial number of nodes is relevant (for small t)
-    G = nx.empty_graph(m)
+    G = nx.complete_graph(m+1)
 
-    # Helper variables
-    repeated_nodes = list(range(m))
-    degrees = np.zeros(n, dtype='uint')
+    # Pool of attachment options
+    repeated_nodes = list(range(m+1))*m
+
+    # Degree initialization
     degree_hist = np.zeros((n, n), dtype='int64')
-    colors = ['black'] * m + ['deepskyblue']*(n - m)
-    
+    degrees = np.zeros(n, dtype='uint')
+    degrees[:m+1] = m
+    degree_hist[m] = degrees
+
+    # Color labels for plotting
+    colors = ['deepskyblue']*n
 
     # Name the graph
     G.name = "BA_Model_({}_{})".format(n,m)
 
     # Add the other nodes
-    for new_node in range(m, n):
+    for new_node in range(m+1, n):
         # Now choose m unique nodes from the existing nodes
         # Pick uniformly from repeated_nodes (preferential attachment)
         targets = _random_subset(repeated_nodes, m, seed)
@@ -91,11 +97,11 @@ def ba_graph_degree(n, m, seed=None):
         degrees[targets] += 1
         degree_hist[new_node] = degrees
     
-    return G, degree_hist, colors
+    return G, degree_hist[m:], colors
 
 
 @py_random_state(2)
-def mixed_graph_degree(n, m, seed=None, keys=None):
+def mixed_graph_degree(n, m, seed=None, init_node=None, keys=None):
     """
     Returns a random graph using randomly the rules of Barabási–Albert
     preferential attachment or simple attachment, and the degree evolution
@@ -130,21 +136,31 @@ def mixed_graph_degree(n, m, seed=None, keys=None):
             }
         }
 
-    # M initial nodes not connected to avoid skewing preferential attachment
-    # Only the initial number of nodes is relevant (for small t)
-    G = nx.empty_graph(m)
+    if init_node == None:
+        for init_node in keys: break
 
-    # Helper variables
-    repeated_nodes = list(range(m))
-    degrees = np.zeros(n, dtype='uint')
+    # M +1 initial nodes fully connected to avoid skewing preferential attachment
+    # Only the initial number of nodes is relevant (for small t)
+    G = nx.complete_graph(m+1)
+
+    # Pool of attachment options & node_types
+    repeated_nodes = list(range(m+1))*keys[init_node]['attachment']
+    node_types = [init_node]*(m+1)
+
+    # Degree initialization
     degree_hist = np.zeros((n, n), dtype='int64')
-    colors = ['black'] * m
+    degrees = np.zeros(n, dtype='uint')
+    degrees[:m+1] = m
+    degree_hist[m] = degrees
+
+    # Color labels for plotting
+    colors = [keys[init_node]['color']] * (m+1)
 
     # Name the graph
     G.name = "Mixed_Model_({}_{})".format(n,m)
 
     # Add the other nodes
-    for new_node in range(m, n):
+    for new_node in range(m+1, n):
         # Now choose m unique nodes from the existing nodes
         # Pick uniformly from repeated_nodes (preferential attachment)
         targets = _random_subset(repeated_nodes, m, seed)
@@ -155,15 +171,27 @@ def mixed_graph_degree(n, m, seed=None, keys=None):
         # Add one node to the list for each new edge just created.
         # & the new node with m edges
         node_type = np.random.choice(list(keys.keys()))
-        repeated_nodes.extend([new_node] * keys[node_type]['attachment'] + targets)
         colors.append(keys[node_type]['color'])
+        node_types.extend(node_type)
+
+        # print(targets, np.array(node_types)[targets], np.array(targets)[np.array(node_types)[targets] == 'A'])
+        expand_targets = np.array(targets)[np.array(node_types)[targets] == 'A'].tolist()
+        repeated_nodes.extend([new_node] * keys[node_type]['attachment'] + expand_targets)
 
         # Change degrees values
         degrees[new_node] = m
         degrees[targets] += 1
         degree_hist[new_node] = degrees
-    
-    return G, degree_hist, colors
+
+    # # Test to be certain about mixed pool
+    # from pprint import pprint
+    # from collections import Counter
+    # counts = dict(Counter(repeated_nodes))
+    # pprint(counts, width=10)
+
+    # print((np.array(list(counts.values()))[np.array(range(n))[np.array(node_types) == 'B']] > 1).any())
+
+    return G, degree_hist[m:], colors
 
 
 @py_random_state(2)
@@ -187,26 +215,32 @@ def ba_fitness_degree(n, m, seed=None):
     degree_hist : ndarray = Degree history of the graph
     colors : color labels for plotting
     """
-    # M initial nodes not connected to avoid skewing preferential attachment
+    # M +1 initial nodes fully connected to avoid skewing preferential attachment
     # Only the initial number of nodes is relevant (for small t)
-    G = nx.empty_graph(m)
+    G = nx.complete_graph(m+1)
 
-    # Helper variables
-    fitness_values = {i: value for i, value in enumerate(npr.uniform(0, 1, n))}
+    # Pool of attachment options & node_types
+    repeated_nodes = list(range(m+1))*m
+
+    # Degree initialization
     degree_hist = np.zeros((n, n), dtype='int64')
     degrees = np.zeros(n, dtype='uint')
-    repeated_nodes = list(range(m))
+    degrees[:m+1] = m
+    degree_hist[m] = degrees
+
+    # Fitness
+    fitness_values = {i: value for i, value in enumerate(npr.uniform(0, 1, n))}
 
     # Gradient colors to represent fitness
     fit_vals_lst = list(fitness_values.values())
-    colors = [[0., 0., 0.]] * m + cm.Blues(fit_vals_lst)[m:,:3].tolist()
+    colors = cm.Blues(fit_vals_lst)[:,:3].tolist()
     
 
     # Name the graph
     G.name = "BA_Fitness_Model_({}_{})".format(n,m)
 
     # Add the other nodes
-    for new_node in range(m, n):
+    for new_node in range(m+1, n):
         # Now choose m unique nodes from the existing nodes
         # Pick uniformly from repeated_nodes (preferential attachment)
         targets = _random_subset_weighted(repeated_nodes, m, fitness_values, seed)
@@ -223,7 +257,7 @@ def ba_fitness_degree(n, m, seed=None):
         degrees[targets] += 1
         degree_hist[new_node] = degrees
     
-    return G, degree_hist, colors
+    return G, degree_hist[m:], colors
 
 
 if __name__ == '__main__':
@@ -246,31 +280,31 @@ if __name__ == '__main__':
 
     m = 2
     n = 20
-    G, degree_hist, colors = mixed_graph_degree(n, m)
-    # Relevant array: degree_hist[m:,m]
+    G, degree_hist, colors = ba_fitness_degree(n, m)#, init_node='B')
+    # Relevant array: degree_hist[:,0]
+    # print(degree_hist)
     
     # Build plot
     fig, ax = plt.subplots(figsize=(6, 6))
 
     # Network base-end values
-    n_nodes = G.number_of_nodes()
     pos = nx.circular_layout(G)
 
     # Make Animation
-    ani = animation.FuncAnimation(fig, animate, frames=range(m, n_nodes+1),
+    ani = animation.FuncAnimation(fig, animate, frames=range(m+1, n+1),
                                     interval=500, fargs=(G, ax, pos, colors))
 
-    # Legend for Mixed Network
-    preferential = mpatches.Patch(color='deepskyblue', label='Preferential')
-    simple = mpatches.Patch(color='olivedrab', label='Simple')
-    fig.legend(handles=[preferential, simple])
+    # # Legend for Mixed Network
+    # preferential = mpatches.Patch(color='deepskyblue', label='Preferential')
+    # simple = mpatches.Patch(color='olivedrab', label='Simple')
+    # fig.legend(handles=[preferential, simple])
 
-    # # Legend for Fitness Network
-    # fig.colorbar(plt.cm.ScalarMappable(cmap=plt.cm.Blues))
+    # Legend for Fitness Network
+    fig.colorbar(plt.cm.ScalarMappable(cmap=plt.cm.Blues))
 
     # Save Animation as a GIF
     folder_path = os.path.join(os.path.abspath(''), '..', '..', 'Reports', 'Figures')
-    filename = os.path.join(folder_path, 'mixed_example.gif')
+    filename = os.path.join(folder_path, 'fitness_example.gif')
     ani.save(filename, writer='pillow')
 
     plt.show()

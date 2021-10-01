@@ -1,5 +1,5 @@
-Monte Carlo Simulations to estimation Time (100 Repetitions):
-    Nx Package generator:    0.004674599170684814
-    BA w/ degree generator:  0.012246301174163818
-    Mixed generator:         0.03123800754547119
-    BA-fitness generator:    0.8579535722732544
+Monte Carlo Simulations to estimation Time (100 Repetitions, m = 2, n = 1000):
+    Nx Package generator:    0.004370520114898682
+    BA w/ degree generator:  0.010558443069458008
+    Mixed generator:         0.08840682029724121
+    BA-fitness generator:    0.7858810329437256
