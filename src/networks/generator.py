@@ -5,7 +5,7 @@ import numpy.random as npr
 from matplotlib.pyplot import cm
 from networkx.utils import py_random_state
 
-
+# TODO: Test random subset with sample and degree instead of repeatedness
 def _random_subset(seq, m, rng):
     """
     Return m unique elements from seq.
@@ -32,11 +32,10 @@ def _random_subset_weighted(seq, m, fitness_values, rng):
     Modified version of networkx.generators.random_graphs._random_subset
     """
     targets = set()
-    weights = np.array([fitness_values[node] for node in seq])
-    weights = weights / np.sum(weights)
+    weights = [fitness_values[node] for node in seq]
     while len(targets) < m:
-        x = npr.choice(list(seq), 1, p=weights.tolist())[0]
-        targets.add(x)
+        x = rng.choices(list(seq), weights=weights, k=m-len(targets))
+        targets.update(x)
     return list(targets)
 
 
@@ -260,6 +259,79 @@ def ba_fitness_degree(n, m, seed=None):
     return G, degree_hist[m:], colors
 
 
+@py_random_state(2)
+def ba_discrete_fitness_degree(n, m, seed=None, start_fitness=None,
+                                                fitness_levels=[0.223, 0.991]):
+    """
+    Returns a random graph using randomly the rules  of Barabási–Albert
+    preferential attachment and from the Erdős-Rényi simple attachment,
+    and the degree evolution of the initial nodes with color labels.
+
+    A graph of $n$ nodes is grown by attaching new nodes each with $m$
+    edges that are preferentially attached to existing nodes with high degree.
+
+    Modified version of networkx.generators.random_graphs.barabasi_albert_graph
+
+    Parameters:
+    n : int = Number of nodes
+    m : int = Number of edges to attach from a new node to existing nodes
+
+    Returns:
+    G : Graph
+    degree_hist : ndarray = Degree history of the graph
+    colors : color labels for plotting
+    """
+    if start_fitness is None:
+        start_fitness = fitness_levels[0]
+    elif start_fitness not in fitness_levels:
+        fitness_levels += [start_fitness]
+
+    # M +1 initial nodes fully connected to avoid skewing preferential attachment
+    # Only the initial number of nodes is relevant (for small t)
+    G = nx.complete_graph(m+1)
+
+    # Pool of attachment options & node_types
+    repeated_nodes = list(range(m+1))*m
+
+    # Degree initialization
+    degree_hist = np.zeros((n, n), dtype='int64')
+    degrees = np.zeros(n, dtype='uint')
+    degrees[:m+1] = m
+    degree_hist[m] = degrees
+
+    # Fitness
+    fitness_values = {i: value for i, value in enumerate(npr.choice(fitness_levels, n))}
+    fitness_values[0] = start_fitness
+
+    # Gradient colors to represent fitness
+    fit_vals_lst = list(fitness_values.values())
+    colors = cm.Blues(fit_vals_lst)[:,:3].tolist()
+    
+
+    # Name the graph
+    G.name = "BA_Fitness_Model_({}_{})".format(n,m)
+
+    # Add the other nodes
+    for new_node in range(m+1, n):
+        # Now choose m unique nodes from the existing nodes
+        # Pick uniformly from repeated_nodes (preferential attachment)
+        targets = _random_subset_weighted(repeated_nodes, m, fitness_values, seed)
+
+        # Add edges to m nodes from the source.
+        G.add_edges_from(zip([new_node] * m, targets))
+
+        # Add one node to the list for each new edge just created.
+        # & the new node with m edges
+        repeated_nodes.extend([new_node] * m + targets)
+
+        # Change degrees values
+        degrees[new_node] = m
+        degrees[targets] += 1
+        degree_hist[new_node] = degrees
+    
+    return G, degree_hist[m:], colors
+
+
 if __name__ == '__main__':
     import os
     import matplotlib.pyplot as plt
@@ -280,7 +352,7 @@ if __name__ == '__main__':
 
     m = 2
     n = 20
-    G, degree_hist, colors = ba_fitness_degree(n, m)#, init_node='B')
+    G, degree_hist, colors = ba_fitness_degree(n, m)#, start_fitness=0.991)#, init_node='B')
     # Relevant array: degree_hist[:,0]
     # print(degree_hist)
     
@@ -303,8 +375,8 @@ if __name__ == '__main__':
     fig.colorbar(plt.cm.ScalarMappable(cmap=plt.cm.Blues))
 
     # Save Animation as a GIF
-    folder_path = os.path.join(os.path.abspath(''), '..', '..', 'Reports', 'Figures')
-    filename = os.path.join(folder_path, 'fitness_example.gif')
+    folder_path = os.path.join(os.path.realpath(__file__), '..', '..', '..', 'Reports', 'Figures')
+    filename = os.path.abspath(os.path.join(folder_path, 'fitness_cases_example.gif'))
     ani.save(filename, writer='pillow')
 
     plt.show()

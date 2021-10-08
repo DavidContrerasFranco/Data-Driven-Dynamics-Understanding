@@ -3,3 +3,21 @@ Monte Carlo Simulations to estimation Time (100 Repetitions, m = 2, n = 1000):
     BA w/ degree generator:  0.010558443069458008
     Mixed generator:         0.08840682029724121
     BA-fitness generator:    0.7858810329437256
+
+w/ Boost to choices weights in Fitness
+    Nx Package generator:    0.004508624076843262
+    BA w/ degree generator:  0.010768234729766846
+    Mixed generator:         0.09032942533493042
+    BA-fitness generator:    0.2986005783081055
+    BA-fit.Dis. generator:   0.29852445125579835
+
+w/ Multi-choice boost in Fitness:
+    Nx Package generator:    0.004520223140716552
+    BA w/ degree generator:  0.014327824115753174
+    Mixed generator:         0.09827733755111695
+    BA-fitness generator:    0.2008042001724243
+    BA-fit.Dis. generator:   0.19354119777679443
+
+N = 10k M=2, Nets=100
+Generating Model Barabási–Albert: 22.166404247283936
+Generating Model BA Discrete Fitness: 820.6117627620697

@@ -43,3 +43,11 @@ for i in range(reps):
     toc = time.time()
     acum +=  toc - tic
 print('BA-fitness generator:\t', acum/reps)
+
+acum = 0
+for i in range(reps):
+    tic = time.time()
+    G, _, _ = generator.ba_discrete_fitness_degree(n, m)
+    toc = time.time()
+    acum +=  toc - tic
+print('BA-fit.Dis. generator:\t', acum/reps)

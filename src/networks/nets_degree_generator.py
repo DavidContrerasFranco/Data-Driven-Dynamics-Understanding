@@ -25,19 +25,18 @@ def get_net(i):
 
 
 # Filepath
-folder_path = os.path.join(os.path.abspath(''), '..', '..', 'Data', 'Generated', 'Barabasi')
+folder_path = os.path.join(os.path.realpath(__file__), '..', '..', '..', 'Data', 'Generated', 'Barabasi')
 
 # Amount of networks to generate
 nets = 100
 
 # Network with n nodes each new node with m connections
-n = 20000
+n = 10000
 m = 2
 
 networks_generator = [
     ('Barabási–Albert', generator.ba_graph_degree),
-    ('Mixed', generator.mixed_graph_degree),
-    ('BA Fitness', generator.ba_fitness_degree)
+    ('BA Discrete Fitness', generator.ba_discrete_fitness_degree)
 ]
 
 for model in networks_generator:
@@ -47,27 +46,17 @@ for model in networks_generator:
     print('Generating Model', name, end=": ")
 
     tic = time.time()
-    # Get average degree for the model
-    # avg_degree = np.zeros((n-m, n))
-    # for net in tqdm(range(nets)):
-    #     G, degree_hist, colors = gen(n, m)
-    #     avg_degree += degree_hist
-    # avg_degree /= nets
-    # name = G.name
-    
-    n = 10000
-    m = 2
     array_mem = RawArray(ctypes.c_double, (n-m)*n)
     avg_degree = np.frombuffer(array_mem, dtype=np.float64).reshape(n-m, n)
 
     with Pool(initializer=init_process, initargs=(array_mem, avg_degree.shape), processes=6) as p:
         p.map(get_net, range(nets))
-    name_file = 'BA_Fast'
+    name_file = name.replace(' ', '')
     toc = time.time()
     print(toc - tic)
 
     # File Name
-    save_path = os.path.join(folder_path, str(nets) + '_' + name_file + '.npy')
+    save_path = os.path.abspath(os.path.join(folder_path, str(nets) + '_' + name_file + f'_({n},{m}).npy'))
 
     # Save the network for later analysis
     with open(save_path, 'wb') as f:
