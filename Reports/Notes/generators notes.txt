@@ -18,6 +18,29 @@ w/ Multi-choice boost in Fitness:
     BA-fitness generator:    0.2008042001724243
     BA-fit.Dis. generator:   0.19354119777679443
 
+
+Alternative BA Generator with Degrees as Weight:
+    Nx Package generator:    0.004567078900337219
+    BA 0 w/ degree gen.:     0.01072831027507782 -> As is from the Source files
+    BA 1 w/ degree gen.:     0.1833774831533432  -> Using simple choice (choices) with degrees as weight
+    BA 2 w/ degree gen.:     0.0542487797498703  -> Using multi choice (sample) with degrees as counts
+As long as replacement needs to be forced, the simple the choice the better.
+
+Alternative BA Generator with Degrees Hist "Optimization":
+    Nx Package generator:    0.004580195879936218
+    BA 0 w/ degree gen.:     0.010722429776191712 -> As is with degree evolution and degree history recording
+    BA 1 w/ degree gen.:     0.013248198866844177 -> Only degrees history recording and evolution
+    BA 2 w/ degree gen.:     0.11638223571777344  -> Degrees history recording with list comprenhension from Nx
+    BA 3 w/ degree gen.:     0.010460034322738648 -> Degree evolution and degree history recording but diagonal as initialization
+
+
+Final Time Test (10k Repetitions, m = 2, n = 1000):
+    Nx Package generator:    0.004321744537353516
+    BA w/ degree generator:  0.010936018872261047
+    Mixed generator:         0.09259022319316865
+    BA-fitness generator:    0.1976585485935211
+    BA-fit.Dis. generator:   0.19925756313800813
+
 N = 10k M=2, Nets=100
 Generating Model Barabási–Albert: 22.166404247283936
 Generating Model BA Discrete Fitness: 820.6117627620697

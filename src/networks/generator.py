@@ -5,7 +5,7 @@ import numpy.random as npr
 from matplotlib.pyplot import cm
 from networkx.utils import py_random_state
 
-# TODO: Test random subset with sample and degree instead of repeatedness
+
 def _random_subset(seq, m, rng):
     """
     Return m unique elements from seq.
@@ -67,7 +67,7 @@ def ba_graph_degree(n, m, seed=None):
     repeated_nodes = list(range(m+1))*m
 
     # Degree initialization
-    degree_hist = np.zeros((n, n), dtype='int64')
+    degree_hist = np.zeros((n, n), dtype='uint')
     degrees = np.zeros(n, dtype='uint')
     degrees[:m+1] = m
     degree_hist[m] = degrees
@@ -352,9 +352,9 @@ if __name__ == '__main__':
 
     m = 2
     n = 20
-    G, degree_hist, colors = ba_fitness_degree(n, m)#, start_fitness=0.991)#, init_node='B')
+    G, degree_hist, colors = ba_graph_degree(n, m)#, start_fitness=0.991)#, init_node='B')
     # Relevant array: degree_hist[:,0]
-    # print(degree_hist)
+    print(degree_hist)
     
     # Build plot
     fig, ax = plt.subplots(figsize=(6, 6))
@@ -371,12 +371,12 @@ if __name__ == '__main__':
     # simple = mpatches.Patch(color='olivedrab', label='Simple')
     # fig.legend(handles=[preferential, simple])
 
-    # Legend for Fitness Network
-    fig.colorbar(plt.cm.ScalarMappable(cmap=plt.cm.Blues))
+    # # Legend for Fitness Network
+    # fig.colorbar(plt.cm.ScalarMappable(cmap=plt.cm.Blues))
 
     # Save Animation as a GIF
     folder_path = os.path.join(os.path.realpath(__file__), '..', '..', '..', 'Reports', 'Figures')
-    filename = os.path.abspath(os.path.join(folder_path, 'fitness_cases_example.gif'))
+    filename = os.path.abspath(os.path.join(folder_path, 'alt_generator.gif'))
     ani.save(filename, writer='pillow')
 
     plt.show()
