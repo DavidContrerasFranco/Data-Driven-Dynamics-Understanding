@@ -1,0 +1,100 @@
+Model Parameters: M = 2 & N = 10k
+
+# Estimation Cases
+Notes on the cases to make the estimation using the SINDy method on the Barabasi-Albert Model.
+Every case comes tagged with a number and an name/id and the description of the case.
+
+1. Simple
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k')
+    - Result: k' = 0.097 1 + -0.001 k
+
+2. Simple + Time
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.097 1 + -0.001 k
+
+3. Simple + Time + CustomL
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.443 k/t + 0.010 1
+
+4. Simple + Time + CustomL Adjusted
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-2)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.479 k/t
+
+5. Big Poly
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k' = 0.323 1 + -0.017 k
+
+6. Discrete Simple
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.111 1 + 0.998 k[k]
+
+7. Discrete Simple + Time
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.412 k[k]/t[k] + 0.017 1 + 1.000 k[k]
+
+8. Discrete Simple + Time + CustomL
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.443 k/t + 0.010 1
+
+9. Discrete Simple + Time + CustomL Adjusted
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=0.1)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.460 k[k]/t[k] + 1.000 k[k]
+
+5. Discrete Big Poly
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.312 1 + 0.984 k[k]
