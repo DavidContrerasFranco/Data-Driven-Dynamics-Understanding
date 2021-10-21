@@ -2,7 +2,9 @@ Model Parameters: M = 2 & N = 10k
 
 # Estimation Cases
 Notes on the cases to make the estimation using the SINDy method on the Barabasi-Albert Model.
-Every case comes tagged with a number and an name/id and the description of the case.
+Here the name of the case comes with the description, each of the cases was tested on each of the
+networks generated. If there was an overflow or ValueError during runtime of the simulation
+of the resulting SINDy Model, then the plot is not generated although the model is discovered.
 
 1. Simple
     - Continous
@@ -10,9 +12,8 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k')
-    - Result: k' = 0.052 1
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - Features: Degree('k')
 
 2. Simple + Time
     - Continous
@@ -20,9 +21,8 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.112 1 + -0.002 k
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - Features: Degree('k') & Time('t')
 
 3. Simple + Time + CustomL
     - Continous
@@ -30,9 +30,8 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.456 k/t + 0.004 1
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - Features: Degree('k') & Time('t')
 
 4. Simple + Time + CustomL Adjusted
     - Continous
@@ -41,8 +40,7 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-2)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.479 k/t
+    - Features: Degree('k') & Time('t')
 
 5. Big Poly Simple
     - Continous
@@ -51,8 +49,7 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=10)
     - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k' = 0.323 1 + -0.017 k
+    - Features: Degree('k')
 
 6. Discrete Simple
     - Discrete
@@ -60,8 +57,7 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.052 1 + 1.000 k[k]
+    - Features: Degree('k')
 
 7. Discrete Simple + Time
     - Discrete
@@ -69,8 +65,7 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.111 1 + 0.998 k[k]
+    - Features: Degree('k') & Time('t')
 
 8. Discrete Simple + Time + CustomL
     - Discrete
@@ -78,8 +73,7 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.412 k[k]/t[k] + 0.017 1 + 1.000 k[k]
+    - Features: Degree('k') & Time('t')
 
 9. Discrete Simple + Time + CustomL Adjusted
     - Discrete
@@ -87,8 +81,7 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=0.1)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.460 k[k]/t[k] + 1.000 k[k]
+    - Features: Degree('k') & Time('t')
 
 10. Discrete Big Poly Simple
     - Discrete
@@ -96,290 +89,833 @@ Every case comes tagged with a number and an name/id and the description of the 
     - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=10)
     - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.312 1 + 0.984 k[k]
+    - Features: Degree('k')
 
-11. Single
-    - Continous
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k')
-    - Result: k' = 0.060 1
+Results of all the networks:
 
-12. Single + Time
-    - Continous
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.085 1 + -0.001 k
+1_BADFitness_[0.53125, 0.46875]_(10000,2).npy:
+    Case Single Fitness 0.53125:
+    k' = 0.049 1
 
-13. Single + Time + CustomL
-    - Continous
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.592 k/t + 0.001 1
+    Case Single Fitness 0.53125 + Time:
+    k' = 0.049 1
+    t' = 1.000 1
 
-14. Single + Time + CustomL Adjusted
-    - Continous
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-2)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.578 k/t
+    Case Single Fitness 0.53125 + Time + CustomL:
+    k' = 0.595 k/t + -0.005 1
+    t' = 1.000 1
 
-15. Big Poly Single
-    - Continous
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=10)
-    - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k' = 0.223 1 + -0.010 k
+    Case Single Fitness 0.53125 + Time + CustomL Adjusted:
+    k' = 0.560 k/t
+    t' = 1.000 1
 
-16. Discrete Single
-    - Discrete
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.059 1 + 1.000 k[k]
+    Case Big Poly Single Fitness 0.53125:
+    k' = 0.342 1 + -0.019 k
 
-17. Discrete Single + Time
-    - Discrete
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.085 1 + 0.999 k[k]
+    Case Discrete Single Fitness 0.53125:
+    k[k+1] = 0.049 1 + 1.000 k[k]
 
-18. Discrete Single + Time + CustomL
-    - Discrete
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.339 k[k]/t[k] + 0.025 1 + 1.000 k[k]
+    Case Discrete Single Fitness 0.53125 + Time:
+    k[k+1] = 0.049 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-19. Discrete Single + Time + CustomL Adjusted
-    - Discrete
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=0.1)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.466 k[k]/t[k] + 1.000 k[k]
+    Case Discrete Single Fitness 0.53125 + Time + CustomL:
+    k[k+1] = 0.370 k[k]/t[k] + 0.015 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-20. Discrete Big Poly Single
-    - Discrete
-    - Single Network
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=10)
-    - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.198 1 + 0.992 k[k]
+    Case Discrete Single Fitness 0.53125 + Time + CustomL Adjusted:
+    k[k+1] = 0.440 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-21. Simple Fitness 0,991
-    - Continous
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k')
-    - Result: k' = 0.120 1
+    Case Discrete Big Poly Single Fitness 0.53125:
+    k[k+1] = 0.303 1 + 0.983 k[k]
 
-22. Simple Fitness 0,991 + Time
-    - Continous
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.199 1 + -0.001 k
+1_BADFitness_[0.991, 0.223]_(10000,2).npy:
+    Case Single Fitness 0.991:
+    k' = 0.109 1
 
-23. Simple Fitness 0,991 + Time + CustomL
-    - Continous
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.612 k/t + 0.002 1
+    Case Single Fitness 0.991 + Time:
+    k' = 0.158 1 + -0.001 k
+    t' = 1.000 1
 
-24. Simple Fitness 0,991 + Time + CustomL Adjusted
-    - Continous
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-2)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.630 k/t
+    Case Single Fitness 0.991 + Time + CustomL:
+    k' = 0.510 k/t + 0.023 1
+    t' = 1.000 1
 
-25. Big Poly Simple Fitness 0,991
-    - Continous
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=10)
-    - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k' = 0.311 1 + -0.003 k
+    Case Single Fitness 0.991 + Time + CustomL Adjusted:
+    k' = 0.609 k/t
+    t' = 1.000 1
 
-26. Discrete Simple Fitness 0,991
-    - Discrete
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.120 1 + 1.000 k[k]
+    Case Big Poly Single Fitness 0.991:
+    k' = 0.268 1 + -0.003 k
 
-27. Discrete Simple Fitness 0,991 + Time
-    - Discrete
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.197 1 + 0.999 k[k]
+    Case Discrete Single Fitness 0.991:
+    k[k+1] = 0.110 1 + 1.000 k[k]
 
-28. Discrete Simple Fitness 0,991 + Time + CustomL
-    - Discrete
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.570 k[k]/t[k] + 0.012 1 + 1.000 k[k]
+    Case Discrete Single Fitness 0.991 + Time:
+    k[k+1] = 0.163 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-29. Discrete Simple Fitness 0,991 + Time + CustomL Adjusted
-    - Discrete
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=0.1)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 2264.944 k[k]/t[k]
+    Case Discrete Single Fitness 0.991 + Time + CustomL:
+    k[k+1] = 0.492 k[k]/t[k] + 0.026 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-30. Discrete Big Poly Simple Fitness 0,991
-    - Discrete
-    - Average of 100 Networks
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=10)
-    - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.307 1 + 0.997 k[k]
+    Case Discrete Single Fitness 0.991 + Time + CustomL Adjusted:
+    k[k+1] = 0.598 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-31. Single Fitness 0,991
-    - Continous
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k')
-    - Result: k' = 0.109 1
+    Case Discrete Big Poly Single Fitness 0.991:
+    k[k+1] = 0.271 1 + 0.997 k[k]
 
-32. Single Fitness 0,991 + Time
-    - Continous
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.158 1 + -0.001 k
+1_BADFitness_[0.4375, 0.5625]_(10000,2).npy:
+    Case Single Fitness 0.4375:
+    k' = 0.053 1 + -0.002 k
 
-33. Single Fitness 0,991 + Time + CustomL
-    - Continous
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-6)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.510 k/t + 0.023 1
+    Case Single Fitness 0.4375 + Time:
+    k' = 0.053 1 + -0.002 k
+    t' = 1.000 1
 
-34. Single Fitness 0,991 + Time + CustomL Adjusted
-    - Continous
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-2)
-    - States: Degree('k') & Time('t')
-    - Result: k' = 0.609 k/t
+    Case Single Fitness 0.4375 + Time + CustomL:
+    k' = 0.264 k/t + 0.009 1
+    t' = 1.000 1
 
-35. Big Poly Single Fitness 0,991
-    - Continous
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Differentiation Method: ps.FiniteDifference()
-    - Feature Library: ps.PolynomialLibrary(degree=10)
-    - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k' = 0.268 1 + -0.003 k
+    Case Single Fitness 0.4375 + Time + CustomL Adjusted:
+    k' = 0.321 k/t
+    t' = 1.000 1
 
-36. Discrete Single Fitness 0,991
-    - Discrete
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.110 1 + 1.000 k[k]
+    Case Big Poly Single Fitness 0.4375:
+    k' = 0.347 1 + -0.084 k + 0.008 k^2
 
-37. Discrete Single Fitness 0,991 + Time
-    - Discrete
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.163 1 + 0.999 k[k]
+    Case Discrete Single Fitness 0.4375:
+    k[k+1] = 0.053 1 + 0.998 k[k]
 
-38. Discrete Single Fitness 0,991 + Time + CustomL
-    - Discrete
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=1e-5)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.492 k[k]/t[k] + 0.026 1 + 1.000 k[k]
+    Case Discrete Single Fitness 0.4375 + Time:
+    k[k+1] = 0.025 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-39. Discrete Single Fitness 0,991 + Time + CustomL Adjusted
-    - Discrete
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
-    - Optimizer: ps.STLSQ(threshold=0.1)
-    - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.598 k[k]/t[k] + 1.000 k[k]
+    Case Discrete Single Fitness 0.4375 + Time + CustomL:
+    k[k+1] = 0.165 k[k]/t[k] + 0.015 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
 
-40. Discrete Big Poly Single Fitness 0,991
-    - Discrete
-    - Single Fitness 0,991 Network
-    - Complete data set for training (Overfit)
-    - Feature Library: ps.PolynomialLibrary(degree=10)
-    - Optimizer: ps.STLSQ(threshold=1e-12)
-    - States: Degree('k')
-    - Result: k[k+1] = 0.271 1 + 0.997 k[k]
+    Case Discrete Single Fitness 0.4375 + Time + CustomL Adjusted:
+    k[k+1] = 0.236 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single Fitness 0.4375:
+    k[k+1] = 0.382 1 + 0.905 k[k] + 0.010 k[k]^2 + -0.001 k[k]^3
+
+1_Barabási–Albert_None_(10000,2).npy:
+    Case Single:
+    k' = 0.060 1
+
+    Case Single + Time:
+    k' = 0.085 1 + -0.001 k
+    t' = 1.000 1
+
+    Case Single + Time + CustomL:
+    k' = 0.592 k/t + 0.001 1
+    t' = 1.000 1
+
+    Case Single + Time + CustomL Adjusted:
+    k' = 0.578 k/t
+    t' = 1.000 1
+
+    Case Big Poly Single:
+    k' = 0.223 1 + -0.010 k
+
+    Case Discrete Single:
+    k[k+1] = 0.059 1 + 1.000 k[k]
+
+    Case Discrete Single + Time:
+    k[k+1] = 0.085 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single + Time + CustomL:
+    k[k+1] = 0.339 k[k]/t[k] + 0.025 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single + Time + CustomL Adjusted:
+    k[k+1] = 0.466 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single:
+    k[k+1] = 0.198 1 + 0.992 k[k]
+
+1_BADFitness_[0.375, 0.625]_(10000,2).npy:
+    Case Single Fitness 0.375:
+    k' = 0.060 1 + -0.002 k
+
+    Case Single Fitness 0.375 + Time:
+    k' = 0.060 1 + -0.002 k
+    t' = 1.000 1
+
+    Case Single Fitness 0.375 + Time + CustomL:
+    k' = 0.301 k/t + 0.003 1
+    t' = 1.000 1
+
+    Case Single Fitness 0.375 + Time + CustomL Adjusted:
+    k' = 0.324 k/t
+    t' = 1.000 1
+
+    Case Big Poly Single Fitness 0.375:
+    k' = 0.433 1 + -0.089 k + 0.008 k^2
+
+    Case Discrete Single Fitness 0.375:
+    k[k+1] = 0.060 1 + 0.998 k[k]
+
+    Case Discrete Single Fitness 0.375 + Time:
+    k[k+1] = 0.060 1 + 0.998 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.375 + Time + CustomL:
+    k[k+1] = 0.160 k[k]/t[k] + 0.033 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.375 + Time + CustomL Adjusted:
+    k[k+1] = 0.248 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single Fitness 0.375:
+    k[k+1] = 0.475 1 + 0.898 k[k] + 0.009 k[k]^2
+
+1_BADFitness_[0.46875, 0.53125]_(10000,2).npy:
+    Case Single Fitness 0.46875:
+    k' = 0.032 1
+
+    Case Single Fitness 0.46875 + Time:
+    k' = 0.077 1 + -0.002 k
+    t' = 1.000 1
+
+    Case Single Fitness 0.46875 + Time + CustomL:
+    k' = 0.582 k/t + -0.011 1
+    t' = 1.000 1
+
+    Case Single Fitness 0.46875 + Time + CustomL Adjusted:
+    k' = 0.543 k/t
+    t' = 1.000 1
+
+    Case Big Poly Single Fitness 0.46875:
+    k' = 0.698 1 + -0.070 k + 0.003 k^2
+
+    Case Discrete Single Fitness 0.46875:
+    k[k+1] = 0.031 1 + 1.000 k[k]
+
+    Case Discrete Single Fitness 0.46875 + Time:
+    k[k+1] = 0.080 1 + 0.998 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.46875 + Time + CustomL:
+    k[k+1] = 0.393 k[k]/t[k] + 0.002 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.46875 + Time + CustomL Adjusted:
+    k[k+1] = 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single Fitness 0.46875:
+    k[k+1] = 0.578 1 + 0.944 k[k] + 0.002 k[k]^2
+
+100_BADFitness_[0.53125, 0.46875]_(10000,2).npy:
+    Case Simple Fitness 0.53125:
+    k' = 0.053 1
+
+    Case Simple Fitness 0.53125 + Time:
+    k' = 0.145 1 + -0.003 k
+    t' = 1.000 1
+
+    Case Simple Fitness 0.53125 + Time + CustomL:
+    k' = 0.415 k/t + 0.024 1
+    t' = 1.000 1
+
+    Case Simple Fitness 0.53125 + Time + CustomL Adjusted:
+    k' = 0.486 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple Fitness 0.53125:
+    k' = 0.296 1 + -0.014 k
+
+    Case Discrete Simple Fitness 0.53125:
+    k[k+1] = 0.053 1 + 1.000 k[k]
+
+    Case Discrete Simple Fitness 0.53125 + Time:
+    k[k+1] = 0.145 1 + 0.997 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.53125 + Time + CustomL:
+    k[k+1] = 0.380 k[k]/t[k] + 0.034 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.53125 + Time + CustomL Adjusted:
+    k[k+1] = 0.463 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Big Poly Simple Fitness 0.53125:
+    k[k+1] = 0.287 1 + 0.986 k[k]
+
+100_BADFitness_[0.25, 0.75]_(10000,2).npy:
+    Case Simple Fitness 0.25:
+    k' = 0.706 1 + -0.234 k + 0.028 k^2 + -0.001 k^3
+
+    Case Simple Fitness 0.25 + Time:
+    k' = 0.706 1 + -0.234 k + 0.028 k^2 + -0.001 k^3
+    t' = 1.000 1
+
+    Case Simple Fitness 0.25 + Time + CustomL:
+    k' = 0.338 k/t + -0.062 1 + 0.013 k + -0.001 k^2
+    t' = 1.000 1
+--> Check Weird warning
+
+    Case Simple Fitness 0.25 + Time + CustomL Adjusted:
+    k' = 0.290 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple Fitness 0.25:
+    k' = 1.322 1 + 0.357 k + -0.859 k^2 + 0.394 k^3 + -0.093 k^4 + 0.013 k^5 + -0.001 k^6
+
+    Case Discrete Simple Fitness 0.25:
+    k[k+1] = 0.604 1 + 0.802 k[k] + 0.024 k[k]^2 + -0.001 k[k]^3
+
+    Case Discrete Simple Fitness 0.25 + Time:
+    k[k+1] = 0.604 1 + 0.802 k[k] + 0.024 k[k]^2 + -0.001 k[k]^3
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.25 + Time + CustomL:
+    k[k+1] = 0.262 k[k]/t[k] + -0.008 1 + 1.001 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.25 + Time + CustomL Adjusted:
+    k[k+1] = 0.252 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Simple Fitness 0.25:
+    k[k+1] = 1.380 1 + 0.752 k[k] + -0.326 k[k]^2 + 0.186 k[k]^3 + -0.046 k[k]^4 + 0.007 k[k]^5 + -0.001 k[k]^6
+
+100_BADFitness_[0.5625, 0.4375]_(10000,2).npy:
+    Case Simple Fitness 0.5625:
+    k' = 0.062 1
+
+    Case Simple Fitness 0.5625 + Time:
+    k' = 0.201 1 + -0.006 k + 0.001 t
+    t' = 1.000 1
+
+    Case Simple Fitness 0.5625 + Time + CustomL:
+    k' = 0.472 k/t + 0.008 1
+    t' = 1.000 1
+
+    Case Simple Fitness 0.5625 + Time + CustomL Adjusted:
+    k' = 0.521 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple Fitness 0.5625:
+    k' = 0.290 1 + -0.011 k
+
+    Case Discrete Simple Fitness 0.5625:
+    k[k+1] = 0.062 1 + 1.000 k[k]
+
+    Case Discrete Simple Fitness 0.5625 + Time:
+    k[k+1] = 0.111 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.5625 + Time + CustomL:
+    k[k+1] = 0.389 k[k]/t[k] + 0.049 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.5625 + Time + CustomL Adjusted:
+    k[k+1] = 0.496 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Simple Fitness 0.5625:
+    k[k+1] = 0.281 1 + 0.990 k[k]
+
+100_BADFitness_[0.46875, 0.53125]_(10000,2).npy:
+    Case Simple Fitness 0.46875:
+    k' = 0.043 1
+
+    Case Simple Fitness 0.46875 + Time:
+    k' = 0.113 1 + -0.003 k
+    t' = 1.000 1
+--> Check Weird warning
+
+    Case Simple Fitness 0.46875 + Time + CustomL:
+    k' = 0.442 k/t + 0.002 1
+    t' = 1.000 1
+
+    Case Simple Fitness 0.46875 + Time + CustomL Adjusted:
+    k' = 0.451 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple Fitness 0.46875:
+    k' = 0.457 1 + -0.044 k + 0.002 k^2
+
+    Case Discrete Simple Fitness 0.46875:
+    k[k+1] = 0.043 1 + 1.000 k[k]
+
+    Case Discrete Simple Fitness 0.46875 + Time:
+    k[k+1] = 0.110 1 + 0.997 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Simple Fitness 0.46875 + Time + CustomL:
+    k[k+1] = 0.403 k[k]/t[k] + 0.005 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.46875 + Time + CustomL Adjusted:
+    k[k+1] = 0.424 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Simple Fitness 0.46875:
+    k[k+1] = 0.424 1 + 0.960 k[k] + 0.002 k[k]^2
+
+100_BADFitness_[0.4375, 0.5625]_(10000,2).npy:
+    Case Simple Fitness 0.4375:
+    k' = 0.082 1 + -0.002 k
+
+    Case Simple Fitness 0.4375 + Time:
+    k' = 0.130 1 + -0.006 k
+    t' = 1.000 1
+
+    Case Simple Fitness 0.4375 + Time + CustomL:
+    k' = 0.317 k/t + 0.030 1 + -0.001 k
+    t' = 1.000 1
+
+    Case Simple Fitness 0.4375 + Time + CustomL Adjusted:
+    k' = 0.387 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple Fitness 0.4375:
+    k' = 0.408 1 + -0.050 k + 0.003 k^2
+
+    Case Discrete Simple Fitness 0.4375:
+    k[k+1] = 0.082 1 + 0.998 k[k]
+
+    Case Discrete Simple Fitness 0.4375 + Time:
+    k[k+1] = 0.128 1 + 0.994 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Simple Fitness 0.4375 + Time + CustomL:
+    k[k+1] = 0.325 k[k]/t[k] + 0.026 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.4375 + Time + CustomL Adjusted:
+    k[k+1] = 0.381 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Simple Fitness 0.4375:
+    k[k+1] = 0.402 1 + 0.951 k[k] + 0.003 k[k]^2
+
+1_BADFitness_[0.625, 0.375]_(10000,2).npy:
+    Case Single Fitness 0.625:
+    k' = 0.025 1
+
+    Case Single Fitness 0.625 + Time:
+    k' = 0.025 1
+    t' = 1.000 1
+
+    Case Single Fitness 0.625 + Time + CustomL:
+    k' = 0.058 k/t + 0.022 1
+    t' = 1.000 1
+
+    Case Single Fitness 0.625 + Time + CustomL Adjusted:
+    k' = 0.265 k/t
+    t' = 1.000 1
+
+    Case Big Poly Single Fitness 0.625:
+    k' = 0.102 1 + -0.011 k + 0.001 k^2
+
+    Case Discrete Single Fitness 0.625:
+    k[k+1] = 0.025 1 + 1.000 k[k]
+
+    Case Discrete Single Fitness 0.625 + Time:
+    k[k+1] = 0.025 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.625 + Time + CustomL:
+    k[k+1] = 0.036 k[k]/t[k] + 0.024 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.625 + Time + CustomL Adjusted:
+    k[k+1] = 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single Fitness 0.625:
+    k[k+1] = 0.118 1 + 0.986 k[k] + 0.001 k[k]^2
+
+100_BADFitness_[0.625, 0.375]_(10000,2).npy:
+    Case Simple Fitness 0.625:
+    k' = 0.081 1
+
+    Case Simple Fitness 0.625 + Time:
+    k' = 0.229 1 + -0.004 k
+    t' = 1.000 1
+
+    Case Simple Fitness 0.625 + Time + CustomL:
+    k' = 0.510 k/t + 0.009 1
+    t' = 1.000 1
+
+    Case Simple Fitness 0.625 + Time + CustomL Adjusted:
+    k' = 0.564 k/t
+    t' = 9.560 k/t
+
+    Case Big Poly Simple Fitness 0.625:
+    k' = 0.317 1 + -0.008 k
+
+    Case Discrete Simple Fitness 0.625:
+    k[k+1] = 0.081 1 + 1.000 k[k]
+
+    Case Discrete Simple Fitness 0.625 + Time:
+    k[k+1] = 0.228 1 + 0.996 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.625 + Time + CustomL:
+    k[k+1] = 0.497 k[k]/t[k] + 0.011 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.625 + Time + CustomL Adjusted:
+    k[k+1] = 0.546 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Big Poly Simple Fitness 0.625:
+    k[k+1] = 0.311 1 + 0.992 k[k]
+
+100_BADFitness_[0.75, 0.25]_(10000,2).npy:
+    Case Simple Fitness 0.75:
+    k' = 0.103 1
+
+    Case Simple Fitness 0.75 + Time:
+    k' = 0.172 1 + -0.001 k
+    t' = 1.000 1
+
+    Case Simple Fitness 0.75 + Time + CustomL:
+    k' = 0.543 k/t + 0.013 1
+    t' = 1.000 1
+
+    Case Simple Fitness 0.75 + Time + CustomL Adjusted:
+    k' = 0.610 k/t
+    t' = 0.000
+    Overflow- Model grows too fast to simulate
+
+    Case Big Poly Simple Fitness 0.75:
+    k' = 0.273 1 + -0.003 k
+
+    Case Discrete Simple Fitness 0.75:
+    k[k+1] = 0.103 1 + 1.000 k[k]
+
+    Case Discrete Simple Fitness 0.75 + Time:
+    k[k+1] = 0.172 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.75 + Time + CustomL:
+    k[k+1] = 0.532 k[k]/t[k] + 0.015 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.75 + Time + CustomL Adjusted:
+    k[k+1] = 0.593 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Big Poly Simple Fitness 0.75:
+    k[k+1] = 0.270 1 + 0.997 k[k]
+
+100_Barabási–Albert_None_(10000,2).npy:
+    Case Simple:
+    k' = 0.052 1
+
+    Case Simple + Time:
+    k' = 0.112 1 + -0.002 k
+    t' = 1.000 1
+
+    Case Simple + Time + CustomL:
+    k' = 0.456 k/t + 0.004 1
+    t' = 1.000 1
+
+    Case Simple + Time + CustomL Adjusted:
+    k' = 0.479 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple:
+    k' = 0.323 1 + -0.017 k
+
+    Case Discrete Simple:
+    k[k+1] = 0.052 1 + 1.000 k[k]
+
+    Case Discrete Simple + Time:
+    k[k+1] = 0.111 1 + 0.998 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple + Time + CustomL:
+    k[k+1] = 0.412 k[k]/t[k] + 0.017 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple + Time + CustomL Adjusted:
+    k[k+1] = 0.460 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Simple:
+    k[k+1] = 0.312 1 + 0.984 k[k]
+
+1_BADFitness_[0.5625, 0.4375]_(10000,2).npy:
+    Case Single Fitness 0.5625:
+    k' = 0.069 1
+
+    Case Single Fitness 0.5625 + Time:
+    k' = 0.123 1 + -0.001 k
+    t' = 1.000 1
+
+    Case Single Fitness 0.5625 + Time + CustomL:
+    k' = 0.453 k/t + 0.016 1
+    t' = 2.237 k/t + 0.016 k + -0.001 t
+
+    Case Single Fitness 0.5625 + Time + CustomL Adjusted:
+    k' = 0.559 k/t
+    t' = 10.122 k/t
+
+    Case Big Poly Single Fitness 0.5625:
+    k' = 0.271 1 + -0.007 k
+
+    Case Discrete Single Fitness 0.5625:
+    k[k+1] = 0.070 1 + 1.000 k[k]
+
+    Case Discrete Single Fitness 0.5625 + Time:
+    k[k+1] = 0.131 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.5625 + Time + CustomL:
+    k[k+1] = 0.436 k[k]/t[k] + 0.018 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.5625 + Time + CustomL Adjusted:
+    k[k+1] = 0.522 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Big Poly Single Fitness 0.5625:
+    k[k+1] = 0.277 1 + 0.992 k[k]
+
+1_BADFitness_[0.223, 0.991]_(10000,2).npy:
+    Case Single Fitness 0.223:
+    k' = 2.729 1 + -0.771 k + 0.080 k^2 + -0.004 k^3
+
+    Case Single Fitness 0.223 + Time:
+    k' = 2.729 1 + -0.771 k + 0.080 k^2 + -0.004 k^3
+    t' = 1.000 1
+
+    Case Single Fitness 0.223 + Time + CustomL:
+    k' = 0.495 k/t + 1.465 1 + -0.547 k + 0.068 k^2 + -0.003 k^3
+    t' = 1.000 1
+--> Check Weird warning
+
+    Case Single Fitness 0.223 + Time + CustomL Adjusted:
+    k' = 0.511 k/t
+    t' = 1.000 1
+
+    Case Big Poly Single Fitness 0.223:
+    k' = 4.433 1 + 0.998 k + -2.979 k^2 + 1.486 k^3 + -0.373 k^4 + 0.056 k^5 + -0.005 k^6
+
+    Case Discrete Single Fitness 0.223:
+    k[k+1] = 1.632 1 + 0.594 k[k] + 0.038 k[k]^2 + -0.002 k[k]^3
+
+    Case Discrete Single Fitness 0.223 + Time:
+    k[k+1] = 1.632 1 + 0.594 k[k] + 0.038 k[k]^2 + -0.002 k[k]^3
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.223 + Time + CustomL:
+    k[k+1] = -0.495 k[k]/t[k] + 2.897 1 + 0.370 k[k] + 0.050 k[k]^2 + -0.002 k[k]^3
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.223 + Time + CustomL Adjusted:
+    k[k+1] = 0.351 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single Fitness 0.223:
+    k[k+1] = 0.774 1 + 0.769 k[k] + 0.342 k[k]^2 + -0.160 k[k]^3 + 0.032 k[k]^4 + -0.003 k[k]^5
+
+100_BADFitness_[0.223, 0.991]_(10000,2).npy:
+    Case Simple Fitness 0.223:
+    k' = 4.503 1 + -3.282 k + 0.941 k^2 + -0.132 k^3 + 0.009 k^4
+
+    Case Simple Fitness 0.223 + Time:
+    k' = 4.426 1 + -3.182 k + 0.893 k^2 + -0.122 k^3 + 0.008 k^4
+    t' = 1.000 1
+
+    Case Simple Fitness 0.223 + Time + CustomL:
+    k' = 0.161 k/t + 2.959 1 + -2.255 k + 0.668 k^2 + -0.096 k^3 + 0.007 k^4
+    t' = 1.000 1
+
+    Case Simple Fitness 0.223 + Time + CustomL Adjusted:
+    k' = 0.304 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple Fitness 0.223:
+    k' = -5.342 1 + 18.243 k + -18.409 k^2 + 9.461 k^3 + -2.939 k^4 + 0.594 k^5 + -0.080 k^6 + 0.007 k^7
+
+    Case Discrete Simple Fitness 0.223:
+    k[k+1] = 1.583 1 + 0.126 k[k] + 0.178 k[k]^2 + -0.016 k[k]^3 + 0.001 k[k]^4
+
+    Case Discrete Simple Fitness 0.223 + Time:
+    k[k+1] = 2.865 1 + -1.010 k[k] + 0.552 k[k]^2 + -0.074 k[k]^3 + 0.005 k[k]^4
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.223 + Time + CustomL:
+    k[k+1] = -0.052 k[k]/t[k] + 3.429 1 + -1.421 k[k] + 0.677 k[k]^2 + -0.094 k[k]^3 + 0.006 k[k]^4
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.223 + Time + CustomL Adjusted:
+    k[k+1] = 0.225 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.013 k[k]/t[k] + 0.138 k[k] + 1.000 t[k]
+
+    Case Discrete Big Poly Simple Fitness 0.223:
+    k[k+1] = 30.736 1 + -56.332 k[k] + 48.344 k[k]^2 + -23.788 k[k]^3 + 7.500 k[k]^4 + -1.579 k[k]^5 + 0.225 k[k]^6 + -0.021 k[k]^7 + 0.001 k[k]^8
+
+100_BADFitness_[0.375, 0.625]_(10000,2).npy:
+    Case Simple Fitness 0.375:
+    k' = 0.089 1 + -0.004 k
+
+    Case Simple Fitness 0.375 + Time:
+    k' = 0.194 1 + -0.015 k
+    t' = 1.000 1
+
+    Case Simple Fitness 0.375 + Time + CustomL:
+    k' = 0.393 k/t + -0.002 1
+    t' = 1.000 1
+
+    Case Simple Fitness 0.375 + Time + CustomL Adjusted:
+    k' = 0.384 k/t
+    t' = 1.000 1
+
+    Case Big Poly Simple Fitness 0.375:
+    k' = 0.909 1 + -0.217 k + 0.022 k^2 + -0.001 k^3
+
+    Case Discrete Simple Fitness 0.375:
+    k[k+1] = 0.087 1 + 0.996 k[k]
+
+    Case Discrete Simple Fitness 0.375 + Time:
+    k[k+1] = 0.183 1 + 0.986 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Simple Fitness 0.375 + Time + CustomL:
+    k[k+1] = 0.356 k[k]/t[k] + 0.001 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.375 + Time + CustomL Adjusted:
+    k[k+1] = 0.358 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Simple Fitness 0.375:
+    k[k+1] = 0.798 1 + 0.814 k[k] + 0.018 k[k]^2 + -0.001 k[k]^3
+
+1_BADFitness_[0.25, 0.75]_(10000,2).npy:
+    Case Single Fitness 0.25:
+    k' = 4.287 1 + -2.005 k + 0.362 k^2 + -0.032 k^3 + 0.001 k^4
+
+    Case Single Fitness 0.25 + Time:
+    k' = 2.365 1 + -0.820 k + 0.104 k^2 + -0.006 k^3
+    t' = 1.000 1
+
+    Case Single Fitness 0.25 + Time + CustomL:
+    k' = 0.804 k/t + -0.217 1 + -0.042 k + 0.016 k^2 + -0.001 k^3
+    t' = 1.000 1
+--> Check Weird warning
+
+    Case Single Fitness 0.25 + Time + CustomL Adjusted:
+    k' = 0.514 k/t
+    t' = 1.000 1
+
+    Case Big Poly Single Fitness 0.25:
+    k' = 7.773 1 + 0.719 k + -5.574 k^2 + 3.214 k^3 + -0.899 k^4 + 0.149 k^5 + -0.016 k^6 + 0.001 k^7
+
+    Case Discrete Single Fitness 0.25:
+    k[k+1] = 1.453 1 + 0.519 k[k] + 0.059 k[k]^2 + -0.003 k[k]^3
+
+    Case Discrete Single Fitness 0.25 + Time:
+    k[k+1] = 1.453 1 + 0.519 k[k] + 0.059 k[k]^2 + -0.003 k[k]^3
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.25 + Time + CustomL:
+    k[k+1] = -0.483 k[k]/t[k] + 3.005 1 + 0.051 k[k] + 0.111 k[k]^2 + -0.006 k[k]^3
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.25 + Time + CustomL Adjusted:
+    k[k+1] = 0.298 k[k]/t[k] + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single Fitness 0.25:
+    k[k+1] = 3.177 1 + 0.870 k[k] + -1.545 k[k]^2 + 0.899 k[k]^3 + -0.247 k[k]^4 + 0.040 k[k]^5 + -0.004 k[k]^6
+
+100_BADFitness_[0.991, 0.223]_(10000,2).npy:
+    Case Simple Fitness 0.991:
+    k' = 0.120 1
+
+    Case Simple Fitness 0.991 + Time:
+    k' = 0.199 1 + -0.001 k
+    t' = 1.000 1
+
+    Case Simple Fitness 0.991 + Time + CustomL:
+    k' = 0.612 k/t + 0.002 1
+    t' = 1.000 1
+
+    Case Simple Fitness 0.991 + Time + CustomL Adjusted:
+    k' = 0.630 k/t
+    t' = 7.487 k/t
+
+    Case Big Poly Simple Fitness 0.991:
+    k' = 0.311 1 + -0.003 k
+
+    Case Discrete Simple Fitness 0.991:
+    k[k+1] = 0.120 1 + 1.000 k[k]
+
+    Case Discrete Simple Fitness 0.991 + Time:
+    k[k+1] = 0.197 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.991 + Time + CustomL:
+    k[k+1] = 0.570 k[k]/t[k] + 0.012 1 + 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Simple Fitness 0.991 + Time + CustomL Adjusted:
+    k[k+1] = 2264.944 k[k]/t[k]
+    t[k+1] = 1.000 t[k]
+    Overflow- Model grows too fast to simulate
+
+    Case Discrete Big Poly Simple Fitness 0.991:
+    k[k+1] = 0.307 1 + 0.997 k[k]
+
+1_BADFitness_[0.75, 0.25]_(10000,2).npy:
+    Case Single Fitness 0.75:
+    k' = 0.072 1
+
+    Case Single Fitness 0.75 + Time:
+    k' = 0.125 1 + -0.001 k
+    t' = 1.000 1
+
+    Case Single Fitness 0.75 + Time + CustomL:
+    k' = 0.592 k/t + 0.001 1
+    t' = 1.000 1
+
+    Case Single Fitness 0.75 + Time + CustomL Adjusted:
+    k' = 0.609 k/t
+    t' = 1.000 1
+
+    Case Big Poly Single Fitness 0.75:
+    k' = 0.208 1 + -0.004 k
+
+    Case Discrete Single Fitness 0.75:
+    k[k+1] = 0.072 1 + 1.000 k[k]
+
+    Case Discrete Single Fitness 0.75 + Time:
+    k[k+1] = 0.128 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.75 + Time + CustomL:
+    k[k+1] = 0.295 k[k]/t[k] + 0.067 1 + 0.999 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Single Fitness 0.75 + Time + CustomL Adjusted:
+    k[k+1] = 1.000 k[k]
+    t[k+1] = 1.000 1 + 1.000 t[k]
+
+    Case Discrete Big Poly Single Fitness 0.75:
+    k[k+1] = 0.199 1 + 0.997 k[k]
