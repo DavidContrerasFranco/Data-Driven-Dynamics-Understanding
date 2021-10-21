@@ -32,22 +32,24 @@ folder_path = os.path.join(os.path.abspath(''), 'Data', 'Generated', 'Barabasi')
 folder_path = os.path.abspath(folder_path)
 
 # Amount of networks to generate
-nets = 100
+nets = 1
 
 # Network with n nodes each new node with m connections
 n = 10000
 m = 2
 
 networks_generator = [
-    ('Barabási–Albert', generator.ba_graph_degree, None),
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.991, 0.223]),      # 0.768 Separation
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.223, 0.991]),
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.75, 0.25]),        # 0.5 Separation
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.25, 0.75]),
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.625, 0.375]),      # 0.25 Separation
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.375, 0.625]),
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.5625, 0.4375]),    # 0.125 Separation
-    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.4375, 0.5625]),
+    # ('Barabási–Albert', generator.ba_graph_degree, None),
+    ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.991, 0.223]),      # 0.768  Separation
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.223, 0.991]),
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.75, 0.25]),        # 0.5    Separation
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.25, 0.75]),
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.625, 0.375]),      # 0.25   Separation
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.375, 0.625]),
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.5625, 0.4375]),    # 0.125  Separation
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.4375, 0.5625]),
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.53125, 0.46875]),  # 0.0625 Separation
+    # ('BAD Fitness', generator.ba_discrete_fitness_degree, [0.46875, 0.53125]),
 ]
 
 for model in networks_generator:
@@ -57,23 +59,24 @@ for model in networks_generator:
     args = model[2]
     print('Generating Model', name, end=": ")
 
-    # avg_degree = np.zeros((n-m, n), dtype='int64')
-    # for i in tqdm(range(nets)):
-    #     if args is not None:
-    #         _, degree_hist, _ = gen(n, m, fitness_levels=args)
-    #     else:
-    #         _, degree_hist, _ = gen(n, m)
-    #     avg_degree += degree_hist
+    avg_degree = np.zeros((n-m, n))
+    for i in tqdm(range(nets)):
+        if args is not None:
+            _, degree_hist, _ = gen(n, m, fitness_levels=args)
+        else:
+            _, degree_hist, _ = gen(n, m)
+        avg_degree += degree_hist
 
-    tic = time.time()
-    array_mem = RawArray(ctypes.c_double, (n-m)*n)
-    avg_degree = np.frombuffer(array_mem, dtype=np.float64).reshape(n-m, n)
+    # tic = time.time()
+    # array_mem = RawArray(ctypes.c_double, (n-m)*n)
+    # avg_degree = np.frombuffer(array_mem, dtype=np.float64).reshape(n-m, n)
 
-    with Pool(initializer=init_process, initargs=(array_mem, avg_degree.shape), processes=7) as p:
-        p.map(get_net, range(nets))
-    name_file = name.replace(' ', '')
-    toc = time.time()
-    print(toc - tic)
+    # with Pool(initializer=init_process, initargs=(array_mem, avg_degree.shape), processes=6) as p:
+    #     p.map(get_net, range(nets))
+    # name_file = name.replace(' ', '')
+    # toc = time.time()
+    # print(toc - tic)
+    avg_degree /= nets
 
     # File Name
     name_file = name.replace(' ', '')
