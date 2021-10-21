@@ -7,47 +7,47 @@ Every case comes tagged with a number and an name/id and the description of the 
 1. Simple
     - Continous
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-6)
     - States: Degree('k')
-    - Result: k' = 0.097 1 + -0.001 k
+    - Result: k' = 0.052 1
 
 2. Simple + Time
     - Continous
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-6)
     - States: Degree('k') & Time('t')
-    - Result: k' = 0.097 1 + -0.001 k
+    - Result: k' = 0.112 1 + -0.002 k
 
 3. Simple + Time + CustomL
     - Continous
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-6)
     - States: Degree('k') & Time('t')
-    - Result: k' = 0.443 k/t + 0.010 1
+    - Result: k' = 0.456 k/t + 0.004 1
 
 4. Simple + Time + CustomL Adjusted
     - Continous
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-2)
     - States: Degree('k') & Time('t')
     - Result: k' = 0.479 k/t
 
-5. Big Poly
+5. Big Poly Simple
     - Continous
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=10)
     - Optimizer: ps.STLSQ(threshold=1e-12)
@@ -57,44 +57,329 @@ Every case comes tagged with a number and an name/id and the description of the 
 6. Discrete Simple
     - Discrete
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
     - States: Degree('k')
-    - Result: k[k+1] = 0.111 1 + 0.998 k[k]
+    - Result: k[k+1] = 0.052 1 + 1.000 k[k]
 
 7. Discrete Simple + Time
     - Discrete
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
     - States: Degree('k') & Time('t')
-    - Result: k[k+1] = 0.412 k[k]/t[k] + 0.017 1 + 1.000 k[k]
+    - Result: k[k+1] = 0.111 1 + 0.998 k[k]
 
 8. Discrete Simple + Time + CustomL
     - Discrete
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
     - States: Degree('k') & Time('t')
-    - Result: k' = 0.443 k/t + 0.010 1
+    - Result: k[k+1] = 0.412 k[k]/t[k] + 0.017 1 + 1.000 k[k]
 
 9. Discrete Simple + Time + CustomL Adjusted
     - Discrete
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=0.1)
     - States: Degree('k') & Time('t')
     - Result: k[k+1] = 0.460 k[k]/t[k] + 1.000 k[k]
 
-5. Discrete Big Poly
+10. Discrete Big Poly Simple
     - Discrete
     - Average of 100 Networks
-    - Complete data set for training
+    - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=10)
     - Optimizer: ps.STLSQ(threshold=1e-12)
     - States: Degree('k')
     - Result: k[k+1] = 0.312 1 + 0.984 k[k]
+
+11. Single
+    - Continous
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k')
+    - Result: k' = 0.060 1
+
+12. Single + Time
+    - Continous
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.085 1 + -0.001 k
+
+13. Single + Time + CustomL
+    - Continous
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.592 k/t + 0.001 1
+
+14. Single + Time + CustomL Adjusted
+    - Continous
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-2)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.578 k/t
+
+15. Big Poly Single
+    - Continous
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k' = 0.223 1 + -0.010 k
+
+16. Discrete Single
+    - Discrete
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.059 1 + 1.000 k[k]
+
+17. Discrete Single + Time
+    - Discrete
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.085 1 + 0.999 k[k]
+
+18. Discrete Single + Time + CustomL
+    - Discrete
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.339 k[k]/t[k] + 0.025 1 + 1.000 k[k]
+
+19. Discrete Single + Time + CustomL Adjusted
+    - Discrete
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=0.1)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.466 k[k]/t[k] + 1.000 k[k]
+
+20. Discrete Big Poly Single
+    - Discrete
+    - Single Network
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.198 1 + 0.992 k[k]
+
+21. Simple Fitness 0,991
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k')
+    - Result: k' = 0.120 1
+
+22. Simple Fitness 0,991 + Time
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.199 1 + -0.001 k
+
+23. Simple Fitness 0,991 + Time + CustomL
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.612 k/t + 0.002 1
+
+24. Simple Fitness 0,991 + Time + CustomL Adjusted
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-2)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.630 k/t
+
+25. Big Poly Simple Fitness 0,991
+    - Continous
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k' = 0.311 1 + -0.003 k
+
+26. Discrete Simple Fitness 0,991
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.120 1 + 1.000 k[k]
+
+27. Discrete Simple Fitness 0,991 + Time
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.197 1 + 0.999 k[k]
+
+28. Discrete Simple Fitness 0,991 + Time + CustomL
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.570 k[k]/t[k] + 0.012 1 + 1.000 k[k]
+
+29. Discrete Simple Fitness 0,991 + Time + CustomL Adjusted
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=0.1)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 2264.944 k[k]/t[k]
+
+30. Discrete Big Poly Simple Fitness 0,991
+    - Discrete
+    - Average of 100 Networks
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.307 1 + 0.997 k[k]
+
+31. Single Fitness 0,991
+    - Continous
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k')
+    - Result: k' = 0.109 1
+
+32. Single Fitness 0,991 + Time
+    - Continous
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.158 1 + -0.001 k
+
+33. Single Fitness 0,991 + Time + CustomL
+    - Continous
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-6)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.510 k/t + 0.023 1
+
+34. Single Fitness 0,991 + Time + CustomL Adjusted
+    - Continous
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-2)
+    - States: Degree('k') & Time('t')
+    - Result: k' = 0.609 k/t
+
+35. Big Poly Single Fitness 0,991
+    - Continous
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Differentiation Method: ps.FiniteDifference()
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k' = 0.268 1 + -0.003 k
+
+36. Discrete Single Fitness 0,991
+    - Discrete
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.110 1 + 1.000 k[k]
+
+37. Discrete Single Fitness 0,991 + Time
+    - Discrete
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.163 1 + 0.999 k[k]
+
+38. Discrete Single Fitness 0,991 + Time + CustomL
+    - Discrete
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=1e-5)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.492 k[k]/t[k] + 0.026 1 + 1.000 k[k]
+
+39. Discrete Single Fitness 0,991 + Time + CustomL Adjusted
+    - Discrete
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
+    - Optimizer: ps.STLSQ(threshold=0.1)
+    - States: Degree('k') & Time('t')
+    - Result: k[k+1] = 0.598 k[k]/t[k] + 1.000 k[k]
+
+40. Discrete Big Poly Single Fitness 0,991
+    - Discrete
+    - Single Fitness 0,991 Network
+    - Complete data set for training (Overfit)
+    - Feature Library: ps.PolynomialLibrary(degree=10)
+    - Optimizer: ps.STLSQ(threshold=1e-12)
+    - States: Degree('k')
+    - Result: k[k+1] = 0.271 1 + 0.997 k[k]
