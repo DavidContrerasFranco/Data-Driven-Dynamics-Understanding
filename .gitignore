@@ -3,9 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Occasional Test File
+test.py
+
 # Data generated
 *.gz
 *.npy
+*.dat
 
 # C extensions
 *.so

@@ -260,8 +260,8 @@ def ba_fitness_degree(n, m, seed=None):
 
 
 @py_random_state(2)
-def ba_discrete_fitness_degree(n, m, seed=None, start_fitness=None,
-                                                fitness_levels=[0.223, 0.991]):
+def ba_discrete_fitness_degree(n, m, seed=None, fitness_levels=[0.991, 0.223],
+                                                fitness_values=None):
     """
     Returns a random graph using randomly the rules  of Barabási–Albert
     preferential attachment and from the Erdős-Rényi simple attachment,
@@ -281,11 +281,6 @@ def ba_discrete_fitness_degree(n, m, seed=None, start_fitness=None,
     degree_hist : ndarray = Degree history of the graph
     colors : color labels for plotting
     """
-    if start_fitness is None:
-        start_fitness = fitness_levels[0]
-    elif start_fitness not in fitness_levels:
-        fitness_levels += [start_fitness]
-
     # M +1 initial nodes fully connected to avoid skewing preferential attachment
     # Only the initial number of nodes is relevant (for small t)
     G = nx.complete_graph(m+1)
@@ -300,8 +295,9 @@ def ba_discrete_fitness_degree(n, m, seed=None, start_fitness=None,
     degree_hist[m] = degrees
 
     # Fitness
-    fitness_values = {i: value for i, value in enumerate(npr.choice(fitness_levels, n))}
-    fitness_values[0] = start_fitness
+    if fitness_values is None:
+        fitness_values = {i: value for i, value in enumerate(npr.choice(fitness_levels, n))}
+        fitness_values[0] = fitness_levels[0]
 
     # Gradient colors to represent fitness
     fit_vals_lst = list(fitness_values.values())
