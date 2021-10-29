@@ -41,6 +41,47 @@ Final Time Test (10k Repetitions, m = 2, n = 1000):
     BA-fitness generator:    0.1976585485935211
     BA-fit.Dis. generator:   0.19925756313800813
 
-N = 10k M=2, Nets=100
-Generating Model Barabási–Albert: 22.166404247283936
-Generating Model BA Discrete Fitness: 820.6117627620697
+N = 10k M=2, Nets=100 -> uint16 made occassional errors
+    Generating Model Barabási–Albert
+    6.892009258270264
+    Generating Model BAD Fitness 0.991
+    661.1310389041901
+    Generating Model BAD Fitness 0.223
+    619.4954121112823
+    Generating Model BAD Fitness 0.75
+    612.4858064651489
+    Generating Model BAD Fitness 0.25
+    625.7234966754913
+    Generating Model BAD Fitness 0.625
+    595.2297232151031
+    Generating Model BAD Fitness 0.375
+    589.6082737445831
+    Generating Model BAD Fitness 0.5625
+    588.0461938381195
+    Generating Model BAD Fitness 0.4375
+    589.9632918834686
+    Generating Model BAD Fitness 0.53125
+    584.4445147514343
+    Generating Model BAD Fitness 0.46875
+    594.0494434833527
+
+N = 10k M=2, Nets=200 w/ uint32 as Shared Memory
+    Generating Model Barabási–Albert
+    71.61223554611206
+    Generating Model BAD Fitness 0.991
+    1404.4801497459412
+    Generating Model BAD Fitness 0.223
+    1449.0100798606873
+    Generating Model BAD Fitness 0.75
+    1456.8289358615875
+    Generating Model BAD Fitness 0.25
+    1471.20214676857
+    Generating Model BAD Fitness 0.625
+    1462.3295266628265
+    Generating Model BAD Fitness 0.375
+    1516.1664414405823
+    Generating Model BAD Fitness 0.5625
+    1584.1637544631958
+    Generating Model BAD Fitness 0.4375
+    1632.9398815631866
+    Generating Model BAD Fitness 0.53125

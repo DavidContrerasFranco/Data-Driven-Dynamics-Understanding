@@ -101,8 +101,7 @@ for file in files:
 
     # Degree evolution from the analytical solution
     if simple is not None:
-        fv_raw:dict = data['fv']
-        fv = np.array(list(fv_raw.values()))
+        fv = np.array(data['fv'])
         # k_ant_sol = barabasi_fitt(m, fv, t, 1)
         k_ant_sol = barabasi_fitt(m, fv, avg_degrees_hist, 0)
     else:

@@ -67,8 +67,8 @@ def ba_graph_degree(n, m, seed=None):
     repeated_nodes = list(range(m+1))*m
 
     # Degree initialization
-    degree_hist = np.zeros((n, n), dtype='uint')
-    degrees = np.zeros(n, dtype='uint')
+    degree_hist = np.zeros((n, n), dtype=np.uint32)
+    degrees = np.zeros(n, dtype=np.uint32)
     degrees[:m+1] = m
     degree_hist[m] = degrees
 
@@ -147,8 +147,8 @@ def mixed_graph_degree(n, m, seed=None, init_node=None, keys=None):
     node_types = [init_node]*(m+1)
 
     # Degree initialization
-    degree_hist = np.zeros((n, n), dtype='int64')
-    degrees = np.zeros(n, dtype='uint')
+    degree_hist = np.zeros((n, n), dtype=np.uint32)
+    degrees = np.zeros(n, dtype=np.uint32)
     degrees[:m+1] = m
     degree_hist[m] = degrees
 
@@ -222,8 +222,8 @@ def ba_fitness_degree(n, m, seed=None):
     repeated_nodes = list(range(m+1))*m
 
     # Degree initialization
-    degree_hist = np.zeros((n, n), dtype='int64')
-    degrees = np.zeros(n, dtype='uint')
+    degree_hist = np.zeros((n, n), dtype=np.uint32)
+    degrees = np.zeros(n, dtype=np.uint32)
     degrees[:m+1] = m
     degree_hist[m] = degrees
 
@@ -289,8 +289,8 @@ def ba_discrete_fitness_degree(n, m, seed=None, fitness_levels=[0.991, 0.223],
     repeated_nodes = list(range(m+1))*m
 
     # Degree initialization
-    degree_hist = np.zeros((n, n), dtype='int64')
-    degrees = np.zeros(n, dtype='uint')
+    degree_hist = np.zeros((n, n), dtype=np.uint32)
+    degrees = np.zeros(n, dtype=np.uint32)
     degrees[:m+1] = m
     degree_hist[m] = degrees
 
