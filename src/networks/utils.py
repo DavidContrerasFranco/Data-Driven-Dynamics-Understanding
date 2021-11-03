@@ -2,6 +2,7 @@
 import os
 import numpy as np
 
+
 def load_networks(data_path):
     '''Get a list of paths for all the files inside data_path'''
     networks_dir = []
@@ -10,6 +11,7 @@ def load_networks(data_path):
         
     return networks_dir
 
+
 def get_degree_distribution(degrees):
     degrees = np.fromiter(dict(degrees).values(), dtype=int)
     nodes, counts = np.unique(degrees, return_counts=True)
@@ -17,32 +19,31 @@ def get_degree_distribution(degrees):
 
     return nodes, prob_dens
 
-import time
-import ctypes
-from tqdm import tqdm
-from multiprocessing import Process, Pool
-from multiprocessing.sharedctypes import RawArray
+
+def barabasi_sol(m, t_i, t):
+    """
+    Returns the degree evolution of the Barabasi-Albert Model.
+
+    Parameters:
+    m   : int = Number of initial edges
+    t_i : int = Time at which the node attached to the network with m edges.
+    t   : int = Time vector for the range of time expected.
+
+    Returns:
+    ndarray = Degree evolution of the node attached at time t_i
+    """
+    return m * np.sqrt(t / t_i)
 
 
-def init_process(array_mem, array_shape):
-    global process_array_mem, process_array_shape
-    process_array_mem = array_mem
-    process_array_shape = array_shape
+def barabasi_diff(k, t, m=2):
+    """
+    Returns the differential value of a node of degree value k at time t.
 
+    Parameters:
+    k : float = Current degree of the node
+    t : int   = Current time
 
-def f(i):
-    arr = np.frombuffer(process_array_mem, dtype=np.float64).reshape(process_array_shape)
-    this = (np.sum(np.mgrid[:n,:n], axis=0) + 1) ** i
-    arr += this
-
-
-n = 10000
-m = 2
-array_mem = RawArray(ctypes.c_double, n*n)
-arr = np.frombuffer(array_mem, dtype=np.float64).reshape(n, n)
-base = np.sum(np.mgrid[:n,:n], axis=0) + 1
-print(base)
-
-with Pool(initializer=init_process, initargs=(array_mem, arr.shape), processes=6) as p:
-    p.map(f, range(10))
-print(arr)
+    Returns:
+    float = Difference
+    """
+    return k / (m * t)
