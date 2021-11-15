@@ -2,7 +2,6 @@
 import os
 import copy
 import time
-import pickle
 import ctypes
 import numpy as np
 import numpy.random as npr
