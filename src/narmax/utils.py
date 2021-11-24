@@ -12,7 +12,6 @@ from sysidentpy.basis_function._basis_function import Polynomial
 def narmax_state_space(nx_model:FROLS, X_train, X_test, states_names):
     xlag = nx_model.xlag if type(nx_model.xlag) == int else max(functools.reduce(operator.iconcat, nx_model.xlag, []))
     max_lag = max(xlag, nx_model.ylag)
-    f_size = len(states_names)
     narmax_time = 0
     coeffs = []
     sim = []

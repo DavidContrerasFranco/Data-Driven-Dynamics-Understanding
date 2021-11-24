@@ -20,12 +20,9 @@ def init_process(array_mem, array_shape):
 
 
 def get_net(i):
-    global n, m, gen, fv, lock
+    global gen, kwargs, lock
     avg_degree = np.frombuffer(process_array_mem, dtype=np.uint32).reshape(process_array_shape)
-    if args is not None:
-        _, degree_hist, _ = gen(n, m, fitness_values=fv)
-    else:
-        _, degree_hist, _ = gen(n, m)
+    _, degree_hist, _ = gen(**kwargs)
     # Aquire and release lock so only one process accessess the shared memory
     with lock:
         avg_degree += degree_hist
@@ -61,16 +58,24 @@ networks_generator = [
 
 for model in networks_generator:
     # Extract data from tuple
+    kwargs = {'n': n, 'm': m}
     name = model[0]
     gen = model[1]
-    args = model[2]
+    fl = model[2]
+    
     print('Generating Model', name)
     data = {}
 
-    if args is not None:
-        fv = {i: value for i, value in enumerate(npr.choice(args, n))}
-        fv[0] = args[0]
+    if fl is not None:
+        fv = {i: value for i, value in enumerate(npr.choice(fl, n))}
+        fv[0] = fl[0]
+        kwargs['fitness_values'] = fv
         data['fv'] = list(fv.values())
+
+    # avg_degree = np.zeros((n-m, n))
+    # for i in tqdm(range(nets)):
+    #     _, degree_hist, _ = gen(**kwargs)
+    #     avg_degree += degree_hist
 
     # Make sure it inits in Zero
     avg_degree = np.frombuffer(array_mem, dtype=np.uint32).reshape(n-m, n)
@@ -82,7 +87,7 @@ for model in networks_generator:
     data['avg_degree'] = np.array(copy.deepcopy(avg_degree.tolist()))/nets
     toc = time.time()
     # File Name
-    filename = str(nets) + '_' + name.replace(' ', '') + f'_{args}_({n},{m}).dat'
+    filename = str(nets) + '_' + name.replace(' ', '') + f'_{fl}_({n},{m}).dat'
     save_path = os.path.abspath(os.path.join(folder_path, filename))
 
     # # Save the network for later analysis

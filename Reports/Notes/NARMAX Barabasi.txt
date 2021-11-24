@@ -1,0 +1,331 @@
+Model Parameters: M = 2 & N = 10k
+
+# Estimation Cases
+Notes on the cases to make the estimation using the NARMAX method on the Barabasi-Albert Model.
+Here the name of the case comes with the description, each of the cases was tested on each of the
+networks generated. If there was an overflow or ValueError during runtime of the simulation
+of the resulting Model, then the plot is not generated although the model is discovered.
+
+1. Simple
+    - FROLS
+    - Number of information Values: False
+    - Complete data set for training (Overfit)
+    - Feature Library: Polynomial(degree=5)
+    - Optimizer: FROLS
+    - Input: Time('t')
+    - Output: Degree('k')
+
+2. Simple N_Info
+    - FROLS
+    - Number of information Values: True
+    - Complete data set for training (Overfit)
+    - Feature Library: Polynomial(degree=5)
+    - Optimizer: FROLS
+    - Input: Time('t')
+    - Output: Degree('k')
+
+3. Simple + Conformal Time
+    - FROLS
+    - Number of information Values: False
+    - Complete data set for training (Overfit)
+    - Feature Library: Polynomial(degree=5)
+    - Optimizer: FROLS
+    - Input: Time('1/t')
+    - Output: Degree('k')
+
+4. Simple N_Info + Conformal Time
+    - FROLS
+    - Number of information Values: True
+    - Complete data set for training (Overfit)
+    - Feature Library: Polynomial(degree=5)
+    - Optimizer: FROLS
+    - Input: Time('1/t')
+    - Output: Degree('k')
+
+Results of all the networks:
+
+100_BADFitness_[0.991, 0.223]_(10000,2).dat:
+    Case Simple Fitness 0.991:
+    k[k+1] = 9.946E-01 k[k] + 2.700E-01 1 + 5.889E-04 t[k] - 1.577E-05 k[k]^2 + 3.699E-12 k[k]^4
+
+    Case Simple Fitness 0.991 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 9.585E-02 1
+
+    Case Simple Fitness 0.991 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 9.479E-01 1/t[k]k[k] - 1.950E-01 1/t[k]^2k[k]^2 + 3.180E-01 1/t[k] - 1.029E-01 1/t[k]^2k[k]^3 + 1.094E-01 1
+
+    Case Simple Fitness 0.991 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 5.865E-01 1/t[k]k[k]
+
+1_BADFitness_[0.223, 0.991]_(10000,2).dat:
+    Case Single Fitness 0.223:
+    k[k+1] = 7.934E-01 k[k] + 1.665E+00 1 + 8.411E-03 k[k]^2 - 1.125E-04 k[k]^3
+
+    Case Single Fitness 0.223 N_Info:
+    k[k+1] = 9.962E-01 k[k] + 1.079E-01 1
+
+    Case Single Fitness 0.223 + Conformal Time:
+    k[k+1] = 9.998E-01 k[k] + 4.005E+01 1/t[k]^2k[k]^2 + 2.964E+02 1/t[k]^4k[k] - 2.106E+00 1/t[k]^2k[k]^3 - 2.538E+02 1/t[k]^3k[k]^2 - 1.022E+03 1/t[k]^2 + 5.720E-02 1/t[k]k[k]^2 + 2.027E+03 1/t[k]^3k[k] - 2.736E+03 1/t[k]^3 - 1.531E+01 1/t[k]
+
+    Case Single Fitness 0.223 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.157E-01 1/t[k]^2k[k]^2
+
+100_BADFitness_[0.53125, 0.46875]_(10000,2).dat:
+    Case Simple Fitness 0.53125:
+    k[k+1] = 9.927E-01 k[k] + 2.145E-01 1 + 3.347E-04 t[k] - 1.620E-06 t[k]k[k] + 7.190E-10 k[k]^4
+
+    Case Simple Fitness 0.53125 N_Info:
+    k[k+1] = 9.997E-01 k[k] + 5.360E-02 1
+
+    Case Simple Fitness 0.53125 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 1.541E+00 1/t[k]k[k] - 4.007E-01 1/t[k]^2k[k]^2 - 2.955E-01 1/t[k]^2k[k]^3 + 7.697E-01 1/t[k]^2k[k] - 8.073E-05 1/t[k]k[k]^3
+
+    Case Simple Fitness 0.53125 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.655E-01 1/t[k]k[k]
+
+100_BADFitness_[0.46875, 0.53125]_(10000,2).dat:
+    Case Simple Fitness 0.46875:
+    k[k+1] = 9.888E-01 k[k] + 2.218E-01 1 + 2.147E-04 k[k]^2 - 1.753E-06 k[k]^3 + 5.106E-09 k[k]^4
+
+    Case Simple Fitness 0.46875 N_Info:
+    k[k+1] = 9.997E-01 k[k] + 4.285E-02 1
+
+    Case Simple Fitness 0.46875 + Conformal Time:
+    k[k+1] = 1.001E+00 k[k] + 7.590E-01 1/t[k]k[k] + 4.935E+01 1/t[k]^2 - 5.266E-07 1/t[k]k[k]^4 - 3.833E-04 1/t[k]k[k]^3 - 9.044E+01 1/t[k]^5 - 1.273E+01 1/t[k]^3k[k]^2 + 1.632E+02 1/t[k]^4 - 7.110E+01 1/t[k]^3 - 1.307E-01 1/t[k]^2k[k]^3
+
+    Case Simple Fitness 0.46875 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.208E-01 1/t[k]k[k]
+
+100_BADFitness_[0.75, 0.25]_(10000,2).dat:
+    Case Simple Fitness 0.75:
+    k[k+1] = 9.927E-01 k[k] + 2.887E-01 1 + 1.042E-03 t[k] - 4.494E-05 k[k]^2 + 2.383E-10 k[k]^4 - 1.777E-10 t[k]^2k[k]
+
+    Case Simple Fitness 0.75 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 9.148E-02 1
+
+    Case Simple Fitness 0.75 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 1.963E+00 1/t[k]k[k] - 3.583E+00 1/t[k]^2k[k]^2 + 7.805E+00 1/t[k] - 2.145E-01 1/t[k]^2k[k]^3 + 1.804E-01 1 - 3.709E-03 1/t[k]k[k]^2 + 8.753E+00 1/t[k]^2k[k] + 3.695E+00 1/t[k]^5 - 1.621E+01 1/t[k]^2
+
+    Case Simple Fitness 0.75 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 5.741E-01 1/t[k]k[k]
+
+1_BADFitness_[0.53125, 0.46875]_(10000,2).dat:
+    Case Single Fitness 0.53125:
+    k[k+1] = 9.977E-01 k[k] + 1.417E-01 1 + 5.069E-05 t[k] - 1.791E-09 t[k]^2
+
+    Case Single Fitness 0.53125 N_Info:
+    k[k+1] = 9.997E-01 k[k] + 6.442E-02 1
+
+    Case Single Fitness 0.53125 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 5.198E-01 1/t[k]k[k] - 1.469E+01 1/t[k]^2k[k]^2 + 4.256E-02 1/t[k]^2k[k]^3 - 6.597E+02 1/t[k]^2 + 5.506E+01 1/t[k] + 1.235E+03 1/t[k]^5 + 1.198E+03 1/t[k]^3k[k] + 2.304E+03 1/t[k]^4 - 2.636E+03 1/t[k]^4k[k]
+
+    Case Single Fitness 0.53125 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.520E-01 1/t[k]k[k]
+
+1_BADFitness_[0.625, 0.375]_(10000,2).dat:
+    Case Single Fitness 0.625:
+    k[k+1] = 9.966E-01 k[k] + 2.272E-01 1 + 2.184E-04 t[k] - 1.821E-08 t[k]^2 + 2.189E-11 t[k]^2k[k]
+
+    Case Single Fitness 0.625 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 8.949E-02 1
+
+    Case Single Fitness 0.625 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 1.110E+00 1/t[k]k[k] + 7.488E+01 1/t[k]^3 - 1.191E-01 1/t[k]^2k[k]^3 + 8.983E-02 1 + 1.784E+02 1/t[k]^5 - 1.273E+02 1/t[k]^4k[k]
+
+    Case Single Fitness 0.625 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 5.510E-01 1/t[k]k[k]
+
+100_BADFitness_[0.375, 0.625]_(10000,2).dat:
+    Case Simple Fitness 0.375:
+    k[k+1] = 9.302E-01 k[k] + 3.996E-01 1 + 4.757E-03 k[k]^2 - 1.548E-04 k[k]^3 + 2.404E-06 k[k]^4 - 1.433E-08 k[k]^5
+
+    Case Simple Fitness 0.375 N_Info:
+    k[k+1] = 9.995E-01 k[k] + 2.547E-02 1
+
+    Case Simple Fitness 0.375 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 3.503E-01 1/t[k]k[k] - 2.011E-01 1/t[k]^3
+
+    Case Simple Fitness 0.375 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 3.188E-01 1/t[k]k[k]
+
+1_BADFitness_[0.75, 0.25]_(10000,2).dat:
+    Case Single Fitness 0.75:
+    k[k+1] = 9.979E-01 k[k] + 2.298E-01 1 + 1.138E-04 t[k] - 3.134E-09 t[k]^2
+
+    Case Single Fitness 0.75 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 1.067E-01 1
+
+    Case Single Fitness 0.75 + Conformal Time:
+    k[k+1] = 9.998E-01 k[k] + 1.226E+00 1/t[k]k[k] - 9.699E-01 1/t[k]^2k[k]^2 + 3.339E+00 1/t[k] - 1.404E-01 1/t[k]^2k[k]^3 + 1.990E-01 1
+
+    Case Single Fitness 0.75 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 5.848E-01 1/t[k]k[k]
+
+1_BADFitness_[0.46875, 0.53125]_(10000,2).dat:
+    Case Single Fitness 0.46875:
+    k[k+1] = 9.947E-01 k[k] + 1.351E-01 1 + 8.310E-05 k[k]^2 - 5.297E-07 k[k]^3 + 2.081E-09 t[k]k[k]^2
+
+    Case Single Fitness 0.46875 N_Info:
+    k[k+1] = 9.997E-01 k[k] + 4.303E-02 1
+
+    Case Single Fitness 0.46875 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 1.024E+00 1/t[k]k[k] - 3.896E-01 1/t[k]^2k[k]^3 + 9.411E-01 1/t[k]^2k[k]^2 - 1.696E+00 1/t[k]^5 - 1.202E-06 1/t[k]k[k]^4
+
+    Case Single Fitness 0.46875 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.140E-01 1/t[k]k[k]
+
+1_BADFitness_[0.5625, 0.4375]_(10000,2).dat:
+    Case Single Fitness 0.5625:
+    k[k+1] = 9.955E-01 k[k] + 1.032E-01 1 + 9.431E-05 t[k] - 1.038E-08 t[k]^2 + 4.534E-11 t[k]^2k[k]
+
+    Case Single Fitness 0.5625 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 3.232E-02 1
+
+    Case Single Fitness 0.5625 + Conformal Time:
+    k[k+1] = 9.999E-01 k[k] - 4.896E+00 1/t[k]k[k] + 1.277E+00 1/t[k]^2k[k]^3 + 5.416E+01 1/t[k] - 1.429E+01 1/t[k]^2k[k]^2 - 8.766E-04 1/t[k]k[k]^3 + 2.208E+01 1/t[k]^3k[k]^2 - 8.488E+01 1/t[k]^2 + 1.427E-01 1 + 3.887E-06 1/t[k]k[k]^4
+
+    Case Single Fitness 0.5625 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 3.913E-01 1/t[k]k[k]
+
+1_BADFitness_[0.4375, 0.5625]_(10000,2).dat:
+    Case Single Fitness 0.4375:
+    k[k+1] = 9.903E-01 k[k] + 1.100E-01 1 - 9.940E-06 k[k]^2 + 1.743E-06 k[k]^3 + 3.050E-04 t[k] - 4.600E-06 t[k]k[k] + 7.717E-11 t[k]^2k[k]
+
+    Case Single Fitness 0.4375 N_Info:
+    k[k+1] = 9.997E-01 k[k] + 3.201E-02 1
+
+    Case Single Fitness 0.4375 + Conformal Time:
+    k[k+1] = 9.998E-01 k[k] + 9.605E-02 1/t[k]k[k] + 6.122E-02 1 + 8.911E-01 1/t[k]^5 - 3.659E-02 1/t[k]k[k]^2
+
+    Case Single Fitness 0.4375 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 3.187E-01 1/t[k]k[k]
+
+1_Barabási–Albert_None_(10000,2).dat:
+    Case Single:
+    k[k+1] = 9.936E-01 k[k] + 2.580E-01 1 + 2.509E-04 t[k] - 3.253E-08 t[k]^2 + 8.649E-11 t[k]^2k[k]
+
+    Case Single N_Info:
+    k[k+1] = 9.997E-01 k[k] + 6.583E-02 1
+
+    Case Single + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 1.029E+00 1/t[k]k[k] - 9.881E-02 1/t[k]^2k[k]^3
+
+    Case Single + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.900E-01 1/t[k]k[k]
+
+1_BADFitness_[0.375, 0.625]_(10000,2).dat:
+    Case Single Fitness 0.375:
+    k[k+1] = 9.945E-01 k[k] + 9.468E-02 1 + 5.036E-06 t[k] + 2.780E-14 t[k]^3 + 1.098E-04 k[k]^2 - 8.386E-07 k[k]^3
+
+    Case Single Fitness 0.375 N_Info:
+    k[k+1] = 9.996E-01 k[k] + 2.725E-02 1
+
+    Case Single Fitness 0.375 + Conformal Time:
+    k[k+1] = 9.982E-01 k[k] + 3.826E+00 1/t[k] + 1.120E-01 1 + 2.928E+02 1/t[k]^5 + 1.719E+02 1/t[k]^4k[k] - 7.667E-02 1/t[k]k[k]^2 + 1.989E-05 1/t[k]k[k]^4 - 6.350E+02 1/t[k]^4 - 1.048E+00 1/t[k]^2k[k]^2
+
+    Case Single Fitness 0.375 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 1.238E+00 1/t[k]
+
+100_BADFitness_[0.5625, 0.4375]_(10000,2).dat:
+    Case Simple Fitness 0.5625:
+    k[k+1] = 9.762E-01 k[k] + 3.312E-01 1 + 2.582E-03 t[k] - 8.192E-05 t[k]k[k] + 1.523E-05 k[k]^3 + 3.413E-06 t[k]^2 - 1.226E-06 t[k]k[k]^2 + 1.092E-07 k[k]^4 - 6.790E-05 k[k]^2
+
+    Case Simple Fitness 0.5625 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 5.174E-02 1
+
+    Case Simple Fitness 0.5625 + Conformal Time:
+    k[k+1] = 9.999E-01 k[k] + 9.058E-02 1/t[k]k[k] + 2.302E+00 1/t[k] + 2.161E-01 1 - 5.712E-02 1/t[k]k[k]^2 - 1.205E+00 1/t[k]^2k[k] + 6.185E-01 1/t[k]^5 + 7.287E-05 1/t[k]k[k]^3
+
+    Case Simple Fitness 0.5625 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.643E-01 1/t[k]k[k]
+
+100_BADFitness_[0.25, 0.75]_(10000,2).dat:
+    Case Simple Fitness 0.25:
+    k[k+1] = 5.669E-01 k[k] + 9.364E-01 1 + 7.884E-02 k[k]^2 - 7.012E-03 k[k]^3 + 3.045E-04 k[k]^4 - 5.168E-06 k[k]^5
+
+    Case Simple Fitness 0.25 N_Info:
+    k[k+1] = 9.988E-01 k[k] + 1.798E-02 1
+
+    Case Simple Fitness 0.25 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] - 2.205E-01 1/t[k]k[k] + 4.570E+02 1/t[k]^5 - 1.576E+03 1/t[k]^4 + 5.647E+02 1/t[k]^4k[k] + 4.089E+00 1/t[k]^3k[k]^2 + 6.457E+00 1/t[k] - 3.205E+00 1/t[k]^2k[k]^3 + 1.814E+01 1/t[k]^2k[k]^2 - 3.947E+01 1/t[k]^2k[k]
+
+    Case Simple Fitness 0.25 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 2.303E-01 1/t[k]k[k]
+
+1_BADFitness_[0.25, 0.75]_(10000,2).dat:
+    Case Single Fitness 0.25:
+    k[k+1] = 7.782E-01 k[k] + 9.664E-01 1 + 1.006E-06 t[k]k[k] + 2.014E-02 k[k]^2 - 8.629E-04 k[k]^3 + 1.710E-05 k[k]^4 - 1.246E-07 k[k]^5 - 8.063E-10 t[k]k[k]^3
+
+    Case Single Fitness 0.25 N_Info:
+    k[k+1] = 9.991E-01 k[k] + 3.388E-02 1
+
+    Case Single Fitness 0.25 + Conformal Time:
+    k[k+1] = 9.994E-01 k[k] + 1.120E+01 1/t[k]k[k] + 2.407E+00 1/t[k]^5 - 9.019E-01 1/t[k]^2k[k]^3 - 1.468E+00 1/t[k]k[k]^2 + 8.575E-02 1/t[k]k[k]^3 - 1.712E-03 1/t[k]k[k]^4 + 4.843E-08 k[k]^4 - 1.727E+01 1/t[k] + 1.477E+00 1/t[k]^2k[k]^2
+
+    Case Single Fitness 0.25 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 3.453E-01 1/t[k]k[k]
+
+100_Barabási–Albert_None_(10000,2).dat:
+    Case Simple:
+    k[k+1] = 9.877E-01 k[k] + 2.587E-01 1 + 3.890E-04 t[k] - 2.403E-06 k[k]^3 + 1.129E-08 k[k]^4 - 1.767E-10 t[k]^2k[k] + 1.143E-04 k[k]^2
+
+    Case Simple N_Info:
+    k[k+1] = 9.997E-01 k[k] + 4.951E-02 1
+
+    Case Simple + Conformal Time:
+    k[k+1] = 9.977E-01 k[k] - 5.957E-01 1/t[k]k[k] + 3.702E-01 1/t[k]^2k[k]^3 + 7.749E-04 1/t[k]k[k]^3 - 1.446E-01 1/t[k]k[k]^2 - 1.504E+01 1/t[k]^3k[k]^2 + 4.236E-01 1 + 9.441E+00 1/t[k]^3k[k] + 4.034E+01 1/t[k]^2
+
+    Case Simple + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.511E-01 1/t[k]k[k]
+
+100_BADFitness_[0.4375, 0.5625]_(10000,2).dat:
+    Case Simple Fitness 0.4375:
+    k[k+1] = 9.727E-01 k[k] + 2.846E-01 1 + 1.054E-03 k[k]^2 - 1.939E-05 k[k]^3 + 1.694E-07 k[k]^4 - 5.650E-10 k[k]^5
+
+    Case Simple Fitness 0.4375 N_Info:
+    k[k+1] = 9.996E-01 k[k] + 3.465E-02 1
+
+    Case Simple Fitness 0.4375 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 1.917E+00 1/t[k]k[k] - 1.149E+00 1/t[k]^2k[k]^3 + 2.138E+00 1/t[k] - 3.198E-04 1/t[k]k[k]^3 - 6.351E-01 1/t[k]^5 - 1.994E+01 1/t[k]^2 + 2.029E+00 1/t[k]^2k[k]^2 + 4.067E+00 1/t[k]^3k[k]^2
+
+    Case Simple Fitness 0.4375 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 3.747E-01 1/t[k]k[k]
+
+1_BADFitness_[0.991, 0.223]_(10000,2).dat:
+    Case Single Fitness 0.991:
+    k[k+1] = 9.959E-01 k[k] + 1.323E-01 1 + 1.253E-04 t[k] - 2.076E-07 t[k]k[k]
+
+    Case Single Fitness 0.991 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 4.426E-02 1
+
+    Case Single Fitness 0.991 + Conformal Time:
+    k[k+1] = 9.999E-01 k[k] + 1.057E-01 1/t[k]k[k] - 1.191E+00 1/t[k]^2k[k]^3 - 1.819E+03 1/t[k]^5 + 2.406E+03 1/t[k]^4 + 1.100E+00 1/t[k]^3k[k]^2 - 3.457E+02 1/t[k]^3k[k] + 6.327E+01 1/t[k]^2 + 1.704E-01 1 + 1.192E+01 1/t[k]^2k[k]^2
+
+    Case Single Fitness 0.991 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 4.364E-01 1/t[k]k[k]
+
+100_BADFitness_[0.625, 0.375]_(10000,2).dat:
+    Case Simple Fitness 0.625:
+    k[k+1] = 9.957E-01 k[k] + 2.036E-01 1 + 3.569E-04 t[k] - 2.368E-05 k[k]^2
+
+    Case Simple Fitness 0.625 N_Info:
+    k[k+1] = 9.998E-01 k[k] + 7.124E-02 1
+
+    Case Simple Fitness 0.625 + Conformal Time:
+    k[k+1] = 9.999E-01 k[k] + 1.794E+00 1/t[k]k[k] + 2.529E-01 1/t[k]^2k[k]^2 - 2.151E+00 1/t[k] + 3.727E+00 1/t[k]^3 - 3.196E-01 1/t[k]^2k[k]^3 - 3.029E+00 1/t[k]^5 + 8.091E-02 1
+
+    Case Simple Fitness 0.625 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 5.256E-01 1/t[k]k[k]
+
+100_BADFitness_[0.223, 0.991]_(10000,2).dat:
+    Case Simple Fitness 0.223:
+    k[k+1] = -4.869E-01 k[k] + 2.280E+00 1 + 3.813E-01 k[k]^2 - 4.800E-02 k[k]^3 + 2.967E-03 k[k]^4 - 7.213E-05 k[k]^5
+
+    Case Simple Fitness 0.223 N_Info:
+    k[k+1] = 9.985E-01 k[k] + 1.503E-02 1
+
+    Case Simple Fitness 0.223 + Conformal Time:
+    k[k+1] = 1.000E+00 k[k] + 6.619E+00 1/t[k] - 6.254E+02 1/t[k]^5 + 2.119E+03 1/t[k]^4 - 6.163E+00 1/t[k]^2k[k]^3 - 4.246E+02 1/t[k]^2 - 7.455E+02 1/t[k]^4k[k] - 1.670E-03 1/t[k]k[k]^4 + 2.999E+01 1/t[k]^3k[k]^2 + 1.726E+02 1/t[k]^2k[k]
+
+    Case Simple Fitness 0.223 + Conformal Time N_Info:
+    k[k+1] = 1.000E+00 k[k] + 5.741E-01 1/t[k]

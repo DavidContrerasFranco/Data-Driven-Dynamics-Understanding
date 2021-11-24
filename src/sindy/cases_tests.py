@@ -2,61 +2,14 @@
 import os
 import pickle
 import numpy as np
-from numpy.lib.shape_base import _kron_dispatcher
 import pysindy as ps
 import subprocess as sp
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
-# Analytic approaches
-def barabasi(m, t_i, t):
-    """
-    Returns the degree evolution of the Barabasi-Albert Model.
-
-    Parameters:
-    m   : int = Number of initial edges
-    t_i : int = Time at which the node attached to the network with m edges.
-    t   : int = Time vector for the range of time expected.
-
-    Returns:
-    ndarray = Degree evolution of the node attached at time t_i
-    """
-    return m * np.sqrt(t / t_i)
-
-def barabasi_fitt(m, fv, k_h, t_i, c_star=1.255):
-    """
-    Returns the degree evolution of the Barabasi-Albert Model with fitness.
-
-    Parameters:
-    m   : int = Number of initial edges
-    fv  : ndarray (R1) = Fitness values of all the nodes in the network
-    k_h : ndarray (R2) = Degree evolution through time of the nodes.
-
-    Returns:
-    ndarray = Degree evolution of the node attached at time t_i
-    """
-    fit_evolve = k_h*fv
-    sum_fit = np.sum(fit_evolve, axis=1)
-    diff_k = m*(fit_evolve[:,t_i]/sum_fit)[:-1]
-    return np.cumsum([m] + diff_k.tolist())
-    # t = k_h
-    # return m*((t / t_i) ** (fv[0]/c_star))
-    # t = k_h
-    # etas = np.array(list(set(fv)))
-    # return m*((t / t_i) ** ((fv[0]*np.sum(etas))/(2*(np.prod(etas) + 1))))
-
-def barabasi_diff(k, t, m=2):
-    """
-    Returns the differential value of a node of degree value k at time t.
-
-    Parameters:
-    k : float = Current degree of the node
-    t : int   = Current time
-
-    Returns:
-    float = Difference
-    """
-    return k / (m * t)
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from networks.utils import barabasi_sol, barabasi_fitt, barabasi_diff
 
 # Paths
 source_folder = os.path.join(os.path.abspath(__file__), '..', '..', '..')
@@ -68,7 +21,7 @@ m = 2
 n = 1e4
 t = np.arange(1, n - m + 1)
 
-k_ant_sol = barabasi(m, 1, t)                   # Degree evolution from the analytical solution
+k_ant_sol = barabasi_sol(m, 1, t)               # Degree evolution from the analytical solution
 k_dif_sol = odeint(barabasi_diff, 2, t)[:,0]    # Degree evolution from differential equations
 
 # Custom library to add the degree differential
@@ -105,7 +58,7 @@ for file in files:
         # k_ant_sol = barabasi_fitt(m, fv, t, 1)
         k_ant_sol = barabasi_fitt(m, fv, avg_degrees_hist, 0)
     else:
-        k_ant_sol = barabasi(m, 1, t)
+        k_ant_sol = barabasi_sol(m, 1, t)
 
     print(k_ant_sol)
 

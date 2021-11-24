@@ -1,0 +1,52 @@
+Test: Run full generation scheme with single core and multiprocess approach to measure imrpovement.
+PC: AMD Ryzen™ Threadripper™ PRO 3955WX
+
+Single Core Test Output:
+
+Multicore Test Output:
+    Generating Model Barabási–Albert done.
+    Generating Model BAD Fitness 0.991 done.
+    Generating Model BAD Fitness 0.223 done.
+    Generating Model BAD Fitness 0.75 done.
+    Generating Model BAD Fitness 0.25 done.
+    Generating Model BAD Fitness 0.625 done.
+    Generating Model BAD Fitness 0.375 done.
+    Generating Model BAD Fitness 0.5625 done.
+    Generating Model BAD Fitness 0.4375 done.
+    Generating Model BAD Fitness 0.53125 done.
+    Generating Model BAD Fitness 0.46875 done.
+    Multi core process (30) took: 3515.8204095363617
+
+    -> 3515.8204095363617 sec ~= 58.597 mins ~= 0.977 h
+
+Single Core Test Output:
+    Generating Model Barabási–Albert
+    100%|██████████| 200/200 [00:55<00:00,  3.61it/s]
+    Generating Model BAD Fitness 0.991
+    100%|██████████| 200/200 [1:15:43<00:00, 22.72s/it]
+    Generating Model BAD Fitness 0.223
+    100%|██████████| 200/200 [1:16:18<00:00, 22.89s/it]
+    Generating Model BAD Fitness 0.75
+    100%|██████████| 200/200 [1:16:31<00:00, 22.96s/it]
+    Generating Model BAD Fitness 0.25
+    100%|██████████| 200/200 [1:16:03<00:00, 22.82s/it]
+    Generating Model BAD Fitness 0.625
+    100%|██████████| 200/200 [1:16:23<00:00, 22.92s/it]
+    Generating Model BAD Fitness 0.375
+    100%|██████████| 200/200 [1:16:10<00:00, 22.85s/it]
+    Generating Model BAD Fitness 0.5625
+    100%|██████████| 200/200 [1:16:17<00:00, 22.89s/it]
+    Generating Model BAD Fitness 0.4375
+    100%|██████████| 200/200 [1:16:06<00:00, 22.83s/it]
+    Generating Model BAD Fitness 0.53125
+    100%|██████████| 200/200 [1:16:13<00:00, 22.87s/it]
+    Generating Model BAD Fitness 0.46875
+    100%|██████████| 200/200 [1:16:10<00:00, 22.85s/it]
+    Single core process took: 45778.38961529732
+
+    -> 45778.38961529732 sec ~= 762.973 mins ~= 12.716 h
+
+
+Improvement:
+    Multi/Single = 0.07680087567697039
+    Single/Multi = 13.02068487091302

@@ -20,6 +20,8 @@ def get_degree_distribution(degrees):
     return nodes, prob_dens
 
 
+# Analytic solutions to the model
+
 def barabasi_sol(m, t_i, t):
     """
     Returns the degree evolution of the Barabasi-Albert Model.
@@ -47,3 +49,26 @@ def barabasi_diff(k, t, m=2):
     float = Difference
     """
     return k / (m * t)
+
+
+def barabasi_fitt(m, fv, k_h, t_i, c_star=1.255):
+    """
+    Returns the degree evolution of the Barabasi-Albert Model with fitness.
+
+    Parameters:
+    m   : int = Number of initial edges
+    fv  : ndarray (R1) = Fitness values of all the nodes in the network
+    k_h : ndarray (R2) = Degree evolution through time of the nodes.
+
+    Returns:
+    ndarray = Degree evolution of the node attached at time t_i
+    """
+    fit_evolve = k_h*fv
+    sum_fit = np.sum(fit_evolve, axis=1)
+    diff_k = m*(fit_evolve[:,t_i]/sum_fit)[:-1]
+    return np.cumsum([m] + diff_k.tolist())
+    # t = k_h
+    # return m*((t / t_i) ** (fv[0]/c_star))
+    # t = k_h
+    # etas = np.array(list(set(fv)))
+    # return m*((t / t_i) ** ((fv[0]*np.sum(etas))/(2*(np.prod(etas) + 1))))

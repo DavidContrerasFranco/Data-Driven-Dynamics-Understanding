@@ -8,7 +8,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 1. Simple
     - Continous
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=5)
@@ -17,7 +16,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 2. Simple + Time
     - Continous
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=5)
@@ -26,7 +24,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 3. Simple + Time + CustomL
     - Continous
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
@@ -35,7 +32,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 4. Simple + Time + CustomL Adjusted
     - Continous
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
@@ -44,7 +40,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 5. Big Poly Simple
     - Continous
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Differentiation Method: ps.FiniteDifference()
     - Feature Library: ps.PolynomialLibrary(degree=10)
@@ -53,7 +48,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 6. Discrete Simple
     - Discrete
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
@@ -61,7 +55,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 7. Discrete Simple + Time
     - Discrete
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
@@ -69,7 +62,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 8. Discrete Simple + Time + CustomL
     - Discrete
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=1e-5)
@@ -77,7 +69,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 9. Discrete Simple + Time + CustomL Adjusted
     - Discrete
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Feature Library: custom_library+ps.PolynomialLibrary(degree=5)
     - Optimizer: ps.STLSQ(threshold=0.1)
@@ -85,7 +76,6 @@ of the resulting SINDy Model, then the plot is not generated although the model 
 
 10. Discrete Big Poly Simple
     - Discrete
-    - Average of 100 Networks
     - Complete data set for training (Overfit)
     - Feature Library: ps.PolynomialLibrary(degree=10)
     - Optimizer: ps.STLSQ(threshold=1e-12)

@@ -1,7 +1,0 @@
-100_BA_Model_(20000_2):
-    differentiation_method=ps.FiniteDifference(drop_endpoints=True)
-    feature_library=custom_library + ps.PolynomialLibrary(degree=3)
-    optimizer=ps.SR3(threshold=0.1, nu=1)
-
-    K' = 0.493 K/t
-    t' = 1.000 1

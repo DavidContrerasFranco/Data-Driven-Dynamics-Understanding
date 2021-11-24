@@ -263,18 +263,21 @@ def ba_fitness_degree(n, m, seed=None):
 def ba_discrete_fitness_degree(n, m, seed=None, fitness_levels=[0.991, 0.223],
                                                 fitness_values=None):
     """
-    Returns a random graph using randomly the rules  of Barabási–Albert
-    preferential attachment and from the Erdős-Rényi simple attachment,
-    and the degree evolution of the initial nodes with color labels.
+    Returns a random graph using randomly the rule of Barabási–Albert
+    preferential attachment with fitness, and the degree evolution of the
+    initial nodes with color labels.
 
     A graph of $n$ nodes is grown by attaching new nodes each with $m$
-    edges that are preferentially attached to existing nodes with high degree.
+    edges that are preferentially attached to existing nodes with high degree
+    and with higher fitness.
 
     Modified version of networkx.generators.random_graphs.barabasi_albert_graph
 
     Parameters:
     n : int = Number of nodes
     m : int = Number of edges to attach from a new node to existing nodes
+    fitness_levels : [float] = Discrete levels of fitness to be assigned randomly
+    fitness_levels : {int:float} = Assigned values of fitness
 
     Returns:
     G : Graph
