@@ -1,19 +1,20 @@
 
 import time
 import copy
-import operator
-import functools
 import numpy as np
 
+from functools import reduce
+from operator import indexOf, iconcat
 from sysidentpy.utils.display_results import results
 from sysidentpy.model_structure_selection import FROLS
-from sysidentpy.basis_function._basis_function import Polynomial
 
 def narmax_state_space(nx_model:FROLS, X_train, X_test, states_names):
-    xlag = nx_model.xlag if type(nx_model.xlag) == int else max(functools.reduce(operator.iconcat, nx_model.xlag, []))
+    xlag = nx_model.xlag if type(nx_model.xlag) == int else max(reduce(iconcat, nx_model.xlag, []))
     max_lag = max(xlag, nx_model.ylag)
+    narmax_model = {}
     narmax_time = 0
     coeffs = []
+    regs = []
     sim = []
 
     for s_id, state in enumerate(states_names):
@@ -38,16 +39,15 @@ def narmax_state_space(nx_model:FROLS, X_train, X_test, states_names):
 
         # Simulate model for the state Z
         coeffs += [np.pad(model.theta.flatten(), (0, model.basis_function.__sizeof__() - len(model.theta)))]
+        regs += [[list(eq) for eq in model.final_model]]
         sim += [model.predict(X=x_test, y=y_test)]
 
     # Stack results for models and predictions
-    narmax_model = np.vstack(coeffs)
+    narmax_model['coeffs'] = np.vstack(coeffs)
+    narmax_model['regs'] = regs
     narmax_sim = np.hstack(sim)
 
     return narmax_model, narmax_sim, narmax_time
-
-
-
 
 
 def display_nx_model(results, theta, output:str, input_vars, max_lag=1):
@@ -64,3 +64,33 @@ def display_nx_model(results, theta, output:str, input_vars, max_lag=1):
         regressors = regressors.replace('x' + str(idx+1), var)
 
     print(output + '[k+1] =' + regressors)
+
+
+def solution_to_regressors(sol_terms, feature_names, order):
+    '''Convert an standard list of terms describing the solution into the NARMAX regressors format'''
+    for f_idx, feature in enumerate(feature_names):
+        if feature not in sol_terms[f_idx]:
+            sol_terms[f_idx] += [feature]
+
+    regressors = []
+    for idx_eq, eq in enumerate(sol_terms):
+        eq_regs = []
+        eq_features = [feature_names[idx_eq]] + np.delete(feature_names, idx_eq).tolist()
+        for term in eq:
+            n = 0
+            reg = np.zeros(order, dtype='int')
+            split_terms = term.split()
+
+            for idx_f, factor in enumerate(split_terms):
+                if '^' in factor:
+                    pos_power = indexOf(factor, '^')
+                    split_terms[idx_f] = [factor[pos_power - 1]] * int(factor[pos_power + 1])
+            split_terms = reduce(iconcat, split_terms, [])
+
+            for factor in split_terms:
+                if factor.isalpha():
+                    reg[n] = 1000*indexOf(eq_features, factor) + 1001
+                    n += 1
+            eq_regs += [list(np.sort(reg))[::-1]]
+        regressors += [eq_regs]
+    return regressors

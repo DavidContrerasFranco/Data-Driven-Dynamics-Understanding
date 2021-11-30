@@ -1,0 +1,10 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Contreras Franco
+    given-names: David
+    orcid: https://orcid.org/0000-0003-2717-541X
+title: "Data-driven Dynamics Understanding"
+version: 0.8.0
+# doi: 10.5281/zenodo.1234
+date-released: 2021-11-29
