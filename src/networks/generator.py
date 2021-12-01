@@ -59,6 +59,10 @@ def ba_graph_degree(n, m, seed=None):
     degree_hist : ndarray = Degree history of the graph
     colors : color labels for plotting
     """
+    if m < 1 or m >= n:
+        raise nx.NetworkXError(
+            f"Barabási–Albert network must have m >= 1 and m + 1 <= n, m = {m}, n = {n}"
+        )
     # M +1 initial nodes fully connected to avoid skewing preferential attachment
     # Only the initial number of nodes is relevant (for small t)
     G = nx.complete_graph(m+1)
@@ -214,6 +218,10 @@ def ba_fitness_degree(n, m, seed=None):
     degree_hist : ndarray = Degree history of the graph
     colors : color labels for plotting
     """
+    if m < 1 or m >= n:
+        raise nx.NetworkXError(
+            f"Barabási–Albert w/ fitness network must have m >= 1 and m + 1 <= n, m = {m}, n = {n}"
+        )
     # M +1 initial nodes fully connected to avoid skewing preferential attachment
     # Only the initial number of nodes is relevant (for small t)
     G = nx.complete_graph(m+1)
@@ -232,7 +240,7 @@ def ba_fitness_degree(n, m, seed=None):
 
     # Gradient colors to represent fitness
     fit_vals_lst = list(fitness_values.values())
-    colors = cm.Blues(fit_vals_lst)[:,:3].tolist()
+    colors = cm.viridis(fit_vals_lst)[:,:3].tolist()
     
 
     # Name the graph

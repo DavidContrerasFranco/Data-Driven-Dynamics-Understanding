@@ -43,6 +43,7 @@ def narmax_state_space(nx_model:FROLS, X_train, X_test, states_names):
         sim += [model.predict(X=x_test, y=y_test)]
 
     # Stack results for models and predictions
+    narmax_model['features'] = states_names
     narmax_model['coeffs'] = np.vstack(coeffs)
     narmax_model['regs'] = regs
     narmax_sim = np.hstack(sim)
@@ -68,9 +69,7 @@ def display_nx_model(results, theta, output:str, input_vars, max_lag=1):
 
 def solution_to_regressors(sol_terms, feature_names, order):
     '''Convert an standard list of terms describing the solution into the NARMAX regressors format'''
-    for f_idx, feature in enumerate(feature_names):
-        if feature not in sol_terms[f_idx]:
-            sol_terms[f_idx] += [feature]
+    # TODO: Division with powers in conversion
 
     regressors = []
     for idx_eq, eq in enumerate(sol_terms):
@@ -81,16 +80,30 @@ def solution_to_regressors(sol_terms, feature_names, order):
             reg = np.zeros(order, dtype='int')
             split_terms = term.split()
 
-            for idx_f, factor in enumerate(split_terms):
+            # Replace powers by repetitions
+            new_split_terms = []
+            for factor in split_terms:
+                new_factor = [factor]
                 if '^' in factor:
                     pos_power = indexOf(factor, '^')
-                    split_terms[idx_f] = [factor[pos_power - 1]] * int(factor[pos_power + 1])
-            split_terms = reduce(iconcat, split_terms, [])
-
-            for factor in split_terms:
+                    new_factor = [factor[pos_power - 1]] * int(factor[pos_power + 1])
+                elif '/' in factor:
+                    pos_div = indexOf(factor, '/')
+                    new_factor = [factor[pos_div - 1], factor[pos_div + 1]]
+                new_split_terms += new_factor
+                    
+            # Convert terms into regressors
+            for factor in new_split_terms:
                 if factor.isalpha():
                     reg[n] = 1000*indexOf(eq_features, factor) + 1001
                     n += 1
+                elif '_k-' in factor:
+                    pos_k = indexOf(factor, 'k')
+                    base = factor[:pos_k - 1]
+                    delay =int(factor[pos_k + 2])
+                    reg[n] = 1000*indexOf(eq_features, base) + 1000 + delay
+                    n += 1
+
             eq_regs += [list(np.sort(reg))[::-1]]
         regressors += [eq_regs]
     return regressors
