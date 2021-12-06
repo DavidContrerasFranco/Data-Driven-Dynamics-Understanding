@@ -2,7 +2,6 @@
 import os
 import pickle
 import numpy as np
-import pysindy as ps
 import subprocess as sp
 import matplotlib.pyplot as plt
 

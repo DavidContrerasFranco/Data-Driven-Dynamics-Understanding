@@ -1,5 +1,4 @@
 
-import os
 import time
 import networkx as nx
 from tqdm import tqdm

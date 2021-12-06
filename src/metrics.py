@@ -36,7 +36,7 @@ def get_metrics_df(valid, sys_sol,  sindy_model:SINDy, narmax_model,
     # 3. L0 Norm
     sindy_l0 = np.linalg.norm(sindy_model.coefficients(), ord=0, axis=1)
     narmax_l0 = np.linalg.norm(narmax_model['coeffs'], ord=0, axis=1)
-    metrics['L0 Norm'] = {'SINDy': sindy_l0, 'NARMAX': narmax_l0}
+    metrics['L0 Norm'] = {'SINDy': sindy_l0.astype(int), 'NARMAX': narmax_l0.astype(int)}
 
     # 4. Sparsity (L0) Difference
     expected_sparsity = np.array(sol_sparsity)
@@ -45,12 +45,12 @@ def get_metrics_df(valid, sys_sol,  sindy_model:SINDy, narmax_model,
     # TODO: Accuretely correct Difference for discrete time
     # sindy_l0_diff = np.abs(expected_sparsity - sindy_l0 - int(sindy_model.discrete_time))
     # narmax_l0_diff = np.abs(expected_sparsity - narmax_l0 - 1)
-    metrics['L0 Norm Diff.'] = {'SINDy': sindy_l0_diff, 'NARMAX': narmax_l0_diff}
+    metrics['L0 Norm Diff.'] = {'SINDy': sindy_l0_diff.astype(int), 'NARMAX': narmax_l0_diff.astype(int)}
 
     # 5. Complexity (Sum of L0)
     sindy_complexity = sindy_model.complexity
     narmax_complexity = np.sum(narmax_l0)
-    metrics['Complexity'] = {'SINDy': sindy_complexity, 'NARMAX': narmax_complexity}
+    metrics['Complexity'] = {'SINDy': int(sindy_complexity), 'NARMAX': int(narmax_complexity)}
 
     # 6. Forecast Error, Mean Squared Error (MSE), Root Relative Squared Error (RRSE)
     sindy_forecast = mean_forecast_error(valid, sindy_sim)
