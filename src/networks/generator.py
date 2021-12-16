@@ -24,7 +24,7 @@ def _random_subset(seq, m, rng):
 
 def _random_subset_weighted(seq, m, fitness_values, rng):
     """
-    Return m unique elements from seq.
+    Return m unique elements from seq weighted by fitness_values.
 
     This differs from random.sample which can return repeated
     elements if seq holds repeated elements.
